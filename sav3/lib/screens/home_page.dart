@@ -1,8 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:sav3/auth.dart';
+import 'package:sav3/screentime.dart';
 
 class HomePage extends StatelessWidget {
-  const HomePage({super.key});
+  HomePage({super.key});
+  Screentime st = new Screentime();
 
   @override
   Widget build(BuildContext context) {
@@ -16,9 +18,15 @@ class HomePage extends StatelessWidget {
       ),
       body: Padding(
         padding: const EdgeInsets.all(20.0),
-        child: ElevatedButton(
-          child: const Text('Sign Out'),
-          onPressed: () => _auth.signOut(),),),);
+        child: Column(mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            ElevatedButton(
+              child: const Text('Print Usage Time'),
+              onPressed: () => st.getUsage(),),
+            ElevatedButton(
+              child: const Text('Sign Out'),
+              onPressed: () => _auth.signOut(),),]
+        ),),);
   }
 }
 

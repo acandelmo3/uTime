@@ -36,6 +36,7 @@ dependencies:
   provider: ^6.0.5
   dob_input_field: ^2.0.0
   cloud_firestore: ^4.3.1
+  usage_stats: ^1.2.0
 
 
   # The following adds the Cupertino Icons font to your application.
