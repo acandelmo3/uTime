@@ -1,7 +1,7 @@
 import 'package:dob_input_field/dob_input_field.dart';
 import 'package:flutter/material.dart';
-import 'package:sav3/auth.dart';
-import 'package:sav3/firestore.dart';
+import 'package:sav3/services/auth.dart';
+import 'package:sav3/services/firestore.dart';
 
 import 'home_page.dart';
 

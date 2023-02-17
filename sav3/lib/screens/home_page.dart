@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:sav3/auth.dart';
-import 'package:sav3/screentime.dart';
+import 'package:sav3/services/auth.dart';
+import 'package:sav3/services/screentime.dart';
 import 'friends_list.dart';
 
 class HomePage extends StatelessWidget {

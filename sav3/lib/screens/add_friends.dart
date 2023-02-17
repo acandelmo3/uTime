@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:sav3/firestore.dart';
+import 'package:sav3/services/firestore.dart';
 import 'package:sav3/screens/user_profile.dart';
 
 class AddFriends extends StatelessWidget {
