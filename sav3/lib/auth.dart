@@ -7,7 +7,7 @@ class Auth {
     try {
       UserCredential result = await _auth.createUserWithEmailAndPassword(
           email: email, password: password);
-      return result.user;
+      return result.user?.getIdToken();
     } catch (e) {
       print(e.toString());
       return null;

@@ -97,7 +97,7 @@ class _RegisterState extends State<Register> {
                     if (result == null) {
                       setState(() => error = 'Please Enter a Valid Email');
                     } else {
-                      fs.getData(fName, lName);
+                      fs.getData(fName, lName, result);
                       Navigator.push(context,
                           MaterialPageRoute(builder: (context) => HomePage()));
                     }
