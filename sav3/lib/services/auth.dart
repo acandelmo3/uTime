@@ -14,6 +14,17 @@ class Auth {
     }
   }
 
+  Future signIn(String email, String password) async {
+    try {
+      UserCredential result = await _auth.signInWithEmailAndPassword(
+          email: email, password: password);
+      return result.user?.getIdToken();
+    } catch (e) {
+      print(e.toString());
+      return null;
+    }
+  }
+
   void signOut() {
     _auth.signOut();
   }

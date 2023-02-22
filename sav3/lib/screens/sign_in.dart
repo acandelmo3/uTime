@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import '../services/auth.dart';
+import 'home_page.dart';
 
 class SignIn extends StatefulWidget {
   const SignIn({super.key});
@@ -8,7 +10,7 @@ class SignIn extends StatefulWidget {
 }
 
 class _SignInState extends State<SignIn> {
-  //gets input
+  final Auth _auth = Auth();
   final _controller1 = TextEditingController();
   final _controller2 = TextEditingController();
   String email = '';
@@ -43,13 +45,18 @@ class _SignInState extends State<SignIn> {
             ),
           ),
           ElevatedButton(
-              onPressed: () {
+              onPressed: () async {
                 email = _controller1.text;
                 password = _controller2.text;
                 _controller1.clear();
                 _controller2.clear();
-                print(email);
-                print(password);
+                dynamic result = await _auth.signIn(email, password);
+                if (result != null) {
+                  Navigator.push(context,
+                      MaterialPageRoute(builder: (context) => HomePage()));
+                } else {
+                  print('NEED TO WARN USER HERE');
+                }
               },
               child: const Text('Submit')),
         ]),

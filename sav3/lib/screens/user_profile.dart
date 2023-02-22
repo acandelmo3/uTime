@@ -3,11 +3,11 @@ import 'package:sav3/services/firestore.dart';
 
 class UserProfile extends StatelessWidget {
   final Firestore fs = Firestore();
-  String token = '';
+  int code = 0;
   String name = '';
 
-  UserProfile(String token, String name) {
-    this.token = token;
+  UserProfile(int code, String name) {
+    this.code = code;
     this.name = name;
   }
 
@@ -30,7 +30,7 @@ class UserProfile extends StatelessWidget {
                   style: const TextStyle(fontSize: 20),),
               Image(image: NetworkImage('https://static.thenounproject.com/png/5034901-200.png')),
               ElevatedButton(child: Text('Add Friend'),
-                onPressed: () => fs.sendRequest(token, name)),
+                onPressed: () => fs.sendRequest(code, name)),
             ]),
       ),
     );

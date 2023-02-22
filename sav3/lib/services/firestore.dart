@@ -12,7 +12,7 @@ class Firestore {
   static String currentUser = '';
 
   static void submitCurrent(String id) {
-    currentUser = id;
+    currentUser = id.substring(0, 25);
   }
 
   void getData(String f, String l, String u) {
@@ -40,29 +40,41 @@ class Firestore {
         )
         .doc(name);
     await docUser.set(user);
+
+    final idDoc =
+        FirebaseFirestore.instance.collection('id map').doc(currentUser);
+    await idDoc.set({'name': name});
   }
 
-  Future<String> searchUsers(String name) async {
+  Future<int> searchUsers(String name) async {
     return await FirebaseFirestore.instance
         .collection('users')
         .doc(name)
         .get()
         .then((DocumentSnapshot documentSnapshot) {
       if (documentSnapshot.exists) {
-        return documentSnapshot.get(FieldPath(['token']));
+        return documentSnapshot.get(FieldPath(['Friend Code']));
       } else {
-        return 'NotFound';
+        return -1;
       }
     });
   }
 
-  void sendRequest(String token, String name) {
+  Future<void> sendRequest(int code, String name) async {
     final outgoing = FirebaseFirestore.instance.collection('users').doc(name);
-    outgoing.update({
-      'Friend Requests':
-          outgoing.get().then((DocumentSnapshot documentSnapshot) {
-        documentSnapshot.get(FieldPath(['Friend Requests'])).add(currentUser);
-      })
+    List<dynamic> temp = [];
+    await outgoing.get().then((DocumentSnapshot documentSnapshot) {
+      temp = documentSnapshot.get(FieldPath(['Friend Requests']));
+    });
+    final curr =
+        FirebaseFirestore.instance.collection('id map').doc(currentUser);
+    curr.get().then((DocumentSnapshot documentSnapshot) {
+      temp.add(documentSnapshot.get(FieldPath(['name'])));
+    });
+    await outgoing.update({'Friend Requests': temp});
+    print(temp);
+    outgoing.get().then((DocumentSnapshot documentSnapshot) {
+      print(documentSnapshot.get(FieldPath(['Friend Requests'])));
     });
   }
 }
