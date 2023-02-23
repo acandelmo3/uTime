@@ -60,6 +60,10 @@ class Firestore {
     });
   }
 
+  static String getCurrentUser() {
+    return currentUser;
+  }
+
   Future<void> sendRequest(int code, String name) async {
     final outgoing = FirebaseFirestore.instance.collection('users').doc(name);
     List<dynamic> temp = [];
@@ -68,13 +72,9 @@ class Firestore {
     });
     final curr =
         FirebaseFirestore.instance.collection('id map').doc(currentUser);
-    curr.get().then((DocumentSnapshot documentSnapshot) {
+    await curr.get().then((DocumentSnapshot documentSnapshot) async {
       temp.add(documentSnapshot.get(FieldPath(['name'])));
     });
     await outgoing.update({'Friend Requests': temp});
-    print(temp);
-    outgoing.get().then((DocumentSnapshot documentSnapshot) {
-      print(documentSnapshot.get(FieldPath(['Friend Requests'])));
-    });
   }
 }

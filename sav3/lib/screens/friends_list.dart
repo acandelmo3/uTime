@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 
 import 'add_friends.dart';
+import 'friend_requests.dart';
 
 class FriendsList extends StatelessWidget {
   const FriendsList({super.key});
@@ -22,6 +23,11 @@ class FriendsList extends StatelessWidget {
               child: const Text('Add Friends'),
               onPressed: () => Navigator.push(context,
                     MaterialPageRoute(builder: (context) => AddFriends())),
+            ),
+            ElevatedButton(
+              child: const Text('Friend Requests'),
+              onPressed: () => Navigator.push(context,
+                    MaterialPageRoute(builder: (context) => FriendRequests())),
             ),
           ]),),
     );
