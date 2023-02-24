@@ -1,8 +1,9 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/src/widgets/framework.dart';
 import 'package:flutter/src/widgets/placeholder.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
-
+import 'package:provider/provider.dart';
 import '../user.dart';
 
 class Firestore {
@@ -11,8 +12,14 @@ class Firestore {
   String token = '';
   static String currentUser = '';
 
-  static void submitCurrent(String id) {
-    currentUser = id.substring(0, 25);
+  Firestore() {
+    getCurrent();
+  }
+  Future<void> getCurrent() async {
+    User? user = await FirebaseAuth.instance.currentUser;
+    user!.getIdToken().then((result) {
+      currentUser = result.substring(0, 25);
+    });
   }
 
   void getData(String f, String l, String u) {
@@ -23,7 +30,7 @@ class Firestore {
   }
 
   Future createUser({required String name}) async {
-    final user = User(
+    final user = AppUser(
       fName: fName,
       lName: lName,
       pfp: '',
@@ -35,8 +42,8 @@ class Firestore {
     final docUser = FirebaseFirestore.instance
         .collection('users')
         .withConverter(
-          fromFirestore: User.fromFirestore,
-          toFirestore: (User user, options) => user.toFirestore(),
+          fromFirestore: AppUser.fromFirestore,
+          toFirestore: (AppUser user, options) => user.toFirestore(),
         )
         .doc(name);
     await docUser.set(user);

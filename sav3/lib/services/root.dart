@@ -16,9 +16,6 @@ class Root extends StatelessWidget {
     if (user == null) {
       return Matrix();
     } else {
-      user.getIdToken().then((String result) {
-        Firestore.submitCurrent(result);
-      });
       return HomePage();
     }
   }

@@ -1,7 +1,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:sav3/services/firestore.dart';
 
-class User {
+class AppUser {
   final String? fName;
   final String? lName;
   final String? pfp;
@@ -9,7 +9,7 @@ class User {
   final List<String>? requests;
   final List<String>? friends;
 
-  User({
+  AppUser({
     this.fName,
     this.lName,
     this.pfp,
@@ -18,12 +18,12 @@ class User {
     this.friends,
   });
 
-  factory User.fromFirestore(
+  factory AppUser.fromFirestore(
     DocumentSnapshot<Map<String, dynamic>> snapshot,
     SnapshotOptions? options,
   ) {
     final data = snapshot.data();
-    return User(
+    return AppUser(
       fName: data?['First Name'],
       lName: data?['Last Name'],
       pfp: data?['Profile Picture'],

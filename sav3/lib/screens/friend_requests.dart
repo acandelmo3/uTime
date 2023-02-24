@@ -8,39 +8,63 @@ class FriendRequests extends StatefulWidget {
 }
 
 class _FriendRequestsState extends State<FriendRequests> {
-  var trial;
-  final Firestore fs = Firestore();
-  var requests;
-
-  Future<void> fetchList() async {
+  Future<List<Widget>> BuildList() async {
+    List<Widget> reqWidgets = <Widget>[];
     final curr = FirebaseFirestore.instance
         .collection('id map')
         .doc(Firestore.getCurrentUser());
+
     await curr.get().then((DocumentSnapshot documentSnapshot) async {
-      requests = await documentSnapshot.get(FieldPath(['Friend Requests']));
+      final user = FirebaseFirestore.instance
+          .collection('users')
+          .doc(await documentSnapshot.get(FieldPath(['name'])));
+      await user.get().then((DocumentSnapshot documentSnapshot) async {
+        for (int i = 0;
+            i <
+                await documentSnapshot
+                    .get(FieldPath(['Friend Requests']))
+                    .length;
+            i++) {
+          String friend = await documentSnapshot
+              .get(FieldPath(['Friend Requests']))
+              .elementAt(i);
+          reqWidgets.add(Row(
+            children: [
+              Text(friend),
+              Spacer(flex: 8),
+              ElevatedButton(
+                  onPressed: () => print('AcceptMethodHere'),
+                  child: Text('Accept')),
+            ],
+          ));
+        }
+      });
     });
+    return reqWidgets;
   }
 
   @override
   Widget build(BuildContext context) {
-    fetchList();
     return Scaffold(
-        backgroundColor: Colors.white,
-        appBar: AppBar(
-          backgroundColor: Colors.blue,
-          elevation: 0.0,
-          title: const Text('Friends'),
-        ),
-        body: Padding(
-          padding: const EdgeInsets.all(20.0),
-          child: Column(children: [
-            for (var i in requests)
-              Row(children: [
-                Text(i),
-                ElevatedButton(
-                    onPressed: () => print(i), child: Text('Accept')),
-              ]),
-          ]),
-        ));
+      backgroundColor: Colors.white,
+      appBar: AppBar(
+        backgroundColor: Colors.blue,
+        elevation: 0.0,
+        title: const Text('Friend Requests'),
+      ),
+      body: FutureBuilder<List<Widget>>(
+          future: BuildList(),
+          builder:
+              (BuildContext context, AsyncSnapshot<List<Widget>> snapshot) {
+            if (snapshot.hasData) {
+              return Padding(
+                padding: const EdgeInsets.all(20.0),
+                child: Column(children: snapshot.data!),
+              );
+            } else {
+              return Container();
+            }
+          }),
+    );
   }
 }
