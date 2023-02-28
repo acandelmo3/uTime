@@ -84,4 +84,26 @@ class Firestore {
     });
     await outgoing.update({'Friend Requests': temp});
   }
+
+  Future<void> acceptRequest(String name) async {
+    List<dynamic> requests = <String>[];
+    List<dynamic> friends = <String>[];
+    final curr = FirebaseFirestore.instance
+        .collection('id map')
+        .doc(currentUser)
+        .get()
+        .then((DocumentSnapshot documentSnapshot) async {
+      final user = FirebaseFirestore.instance
+          .collection('users')
+          .doc(documentSnapshot.get(FieldPath(['name'])));
+      await user.get().then((DocumentSnapshot documentSnapshot) {
+        requests = documentSnapshot.get(FieldPath(['Friend Requests']));
+        friends = documentSnapshot.get(FieldPath(['Friends List']));
+      });
+      requests.remove(name);
+      friends.add(name);
+      await user.update({'Friend Requests': requests});
+      await user.update({'Friends List': friends});
+    });
+  }
 }

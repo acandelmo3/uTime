@@ -8,6 +8,8 @@ class FriendRequests extends StatefulWidget {
 }
 
 class _FriendRequestsState extends State<FriendRequests> {
+  final Firestore fs = Firestore();
+
   Future<List<Widget>> BuildList() async {
     List<Widget> reqWidgets = <Widget>[];
     final curr = FirebaseFirestore.instance
@@ -32,8 +34,10 @@ class _FriendRequestsState extends State<FriendRequests> {
             children: [
               Text(friend),
               Spacer(flex: 8),
-              ElevatedButton(
-                  onPressed: () => print('AcceptMethodHere'),
+            ElevatedButton(
+                  onPressed: () {
+                    fs.acceptRequest(friend);
+                  },
                   child: Text('Accept')),
             ],
           ));
