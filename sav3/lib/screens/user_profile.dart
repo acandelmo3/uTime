@@ -19,12 +19,12 @@ class UserProfile extends StatelessWidget {
     final curr = FirebaseFirestore.instance
         .collection('id map')
         .doc(Firestore.getCurrentUser());
-    await curr.get().then((DocumentSnapshot documentSnapshot) {
+    await curr.get().then((DocumentSnapshot documentSnapshot) async {
       curr_name = documentSnapshot.get(FieldPath(['name']));
-      FirebaseFirestore.instance
+      final user = FirebaseFirestore.instance
           .collection('users')
-          .doc(documentSnapshot.get(FieldPath(['name'])))
-          .get()
+          .doc(documentSnapshot.get(FieldPath(['name'])));
+      await user.get()
           .then((DocumentSnapshot documentSnapshot) {
         requests = documentSnapshot.get(FieldPath(['Friend Requests']));
         friends = documentSnapshot.get(FieldPath(['Friends List']));
@@ -35,14 +35,15 @@ class UserProfile extends StatelessWidget {
       return false;
     }
 
-    for (int i = 0; i < requests.length; i++) {
-      if (requests.elementAt(i) == name) {
+    for (var i in requests) {
+      print(i);
+      if (await i == name) {
         return false;
       }
     }
 
-    for (int i = 0; i < friends.length; i++) {
-      if (friends.elementAt(i) == name) {
+    for (var i in friends) {
+      if (await i == name) {
         return false;
       }
     }

@@ -34,13 +34,14 @@ class _FriendRequestsState extends State<FriendRequests> {
             children: [
               Text(friend),
               Spacer(flex: 8),
-            ElevatedButton(
+              ElevatedButton(
                   onPressed: () {
                     fs.acceptRequest(friend);
                   },
                   child: Text('Accept')),
             ],
           ));
+          reqWidgets.add(Spacer());
         }
       });
     });
