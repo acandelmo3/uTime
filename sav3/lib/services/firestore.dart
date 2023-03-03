@@ -17,9 +17,11 @@ class Firestore {
   }
   Future<void> getCurrent() async {
     User? user = await FirebaseAuth.instance.currentUser;
-    user!.getIdToken().then((result) {
+    if (user != null) {
+      user!.getIdToken().then((result) {
       currentUser = result.substring(0, 25);
     });
+    }    
   }
 
   void getData(String f, String l, String u) {

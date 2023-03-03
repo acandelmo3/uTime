@@ -5,6 +5,7 @@ import 'package:sav3/services/auth.dart';
 import 'package:sav3/services/screentime.dart';
 import '../services/firestore.dart';
 import 'friends_list.dart';
+import 'login_matrix.dart';
 
 class HomePage extends StatelessWidget {
   HomePage({super.key});
@@ -33,8 +34,11 @@ class HomePage extends StatelessWidget {
               ),
               ElevatedButton(
                 child: const Text('Sign Out'),
-                onPressed: () => _auth.signOut(),
-              ),
+                onPressed: () {
+                  _auth.signOut();
+                  Navigator.push(context,
+                      MaterialPageRoute(builder: (context) => Matrix()));
+              }),
               ElevatedButton(
                   child: const Text('Friends'),
                   onPressed: () => Navigator.push(context,
