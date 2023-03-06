@@ -10,7 +10,6 @@ class Auth {
     try {
       UserCredential result = await _auth.createUserWithEmailAndPassword(
           email: email, password: password);
-      fs.getCurrent();
       return result.user?.getIdToken();
     } catch (e) {
       print(e.toString());
@@ -22,7 +21,7 @@ class Auth {
     try {
       UserCredential result = await _auth.signInWithEmailAndPassword(
           email: email, password: password);
-          fs.getCurrent();
+      await fs.getCurrent();
       return result.user?.getIdToken();
     } catch (e) {
       print(e.toString());
@@ -30,8 +29,8 @@ class Auth {
     }
   }
 
-  void signOut() {
-    _auth.signOut();
-    fs.getCurrent();
+  Future<void> signOut() async {
+    await _auth.signOut();
+    await fs.getCurrent();
   }
 }

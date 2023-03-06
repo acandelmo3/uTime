@@ -1,8 +1,6 @@
-import 'package:dob_input_field/dob_input_field.dart';
 import 'package:flutter/material.dart';
 import 'package:sav3/services/auth.dart';
 import 'package:sav3/services/firestore.dart';
-
 import 'home_page.dart';
 
 class Register extends StatefulWidget {
@@ -17,7 +15,6 @@ class _RegisterState extends State<Register> {
   final Firestore fs = Firestore();
   final _formkey = GlobalKey<FormState>();
 
-  //gets input
   final _controller1 = TextEditingController();
   final _controller2 = TextEditingController();
   final _controller3 = TextEditingController();
@@ -97,6 +94,7 @@ class _RegisterState extends State<Register> {
                     if (result == null) {
                       setState(() => error = 'Please Enter a Valid Email');
                     } else {
+                      fs.getCurrent();
                       fs.getData(fName, lName, result);
                       Navigator.push(context,
                           MaterialPageRoute(builder: (context) => HomePage()));

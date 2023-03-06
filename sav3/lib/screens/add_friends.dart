@@ -51,7 +51,7 @@ class AddFriends extends StatelessWidget {
                                 context,
                                 MaterialPageRoute(
                                     builder: (context) =>
-                                        UserProfile(code, _controller.text)));
+                                        UserProfile(_controller.text)));
                           }
                         },
                       )),

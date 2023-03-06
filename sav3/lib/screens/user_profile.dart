@@ -10,8 +10,7 @@ class UserProfile extends StatelessWidget {
   List<dynamic> requests = <String>[];
   List<dynamic> friends = <String>[];
 
-  UserProfile(int code, String name) {
-    this.code = code;
+  UserProfile(String name) {
     this.name = name;
   }
 

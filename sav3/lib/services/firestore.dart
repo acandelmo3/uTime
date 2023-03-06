@@ -1,3 +1,4 @@
+import 'dart:math';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/src/widgets/framework.dart';
 import 'package:flutter/src/widgets/placeholder.dart';
@@ -15,13 +16,12 @@ class Firestore {
   Firestore() {
     getCurrent();
   }
+
   Future<void> getCurrent() async {
-    User? user = await FirebaseAuth.instance.currentUser;
-    if (user != null) {
-      user!.getIdToken().then((result) {
-      currentUser = result.substring(0, 25);
-    });
-    }    
+    String? uid = FirebaseAuth.instance.currentUser?.uid;
+    if (uid != null) {
+      currentUser = uid.substring(0, 25);
+    }
   }
 
   void getData(String f, String l, String u) {
@@ -39,6 +39,7 @@ class Firestore {
       code: 0,
       requests: [],
       friends: [],
+      time: Random().nextInt(100),
     );
 
     final docUser = FirebaseFirestore.instance
@@ -50,6 +51,7 @@ class Firestore {
         .doc(name);
     await docUser.set(user);
 
+    await getCurrent();
     final idDoc =
         FirebaseFirestore.instance.collection('id map').doc(currentUser);
     await idDoc.set({'name': name});
@@ -90,14 +92,14 @@ class Firestore {
   Future<void> acceptRequest(String name) async {
     List<dynamic> requests = <String>[];
     List<dynamic> friends = <String>[];
+    String currName = '';
     final curr = FirebaseFirestore.instance
         .collection('id map')
         .doc(currentUser)
         .get()
         .then((DocumentSnapshot documentSnapshot) async {
-      final user = FirebaseFirestore.instance
-          .collection('users')
-          .doc(documentSnapshot.get(FieldPath(['name'])));
+      currName = documentSnapshot.get(FieldPath(['name']));
+      final user = FirebaseFirestore.instance.collection('users').doc(currName);
       await user.get().then((DocumentSnapshot documentSnapshot) {
         requests = documentSnapshot.get(FieldPath(['Friend Requests']));
         friends = documentSnapshot.get(FieldPath(['Friends List']));
@@ -107,5 +109,12 @@ class Firestore {
       await user.update({'Friend Requests': requests});
       await user.update({'Friends List': friends});
     });
+
+    final requester = FirebaseFirestore.instance.collection('users').doc(name);
+    await requester.get().then((DocumentSnapshot documentSnapshot) {
+      friends = documentSnapshot.get(FieldPath(['Friends List']));
+    });
+    friends.add(currName);
+    await requester.update({'Friends List': friends});
   }
 }

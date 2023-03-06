@@ -52,13 +52,11 @@ class HomePage extends StatelessWidget {
                           .then((DocumentSnapshot documentSnapshot) async {
                         String name =
                             await documentSnapshot.get(FieldPath(['name']));
-                        fs.searchUsers(name).then((int result) {
                           Navigator.push(
                               context,
                               MaterialPageRoute(
                                   builder: (context) =>
-                                      UserProfile(result, name)));
-                        });
+                                      UserProfile(name)));
                       });})
             ]),
       ),

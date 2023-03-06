@@ -8,6 +8,7 @@ class AppUser {
   final int? code;
   final List<String>? requests;
   final List<String>? friends;
+  final int? time;
 
   AppUser({
     this.fName,
@@ -16,6 +17,7 @@ class AppUser {
     this.code,
     this.requests,
     this.friends,
+    this.time,
   });
 
   factory AppUser.fromFirestore(
@@ -34,6 +36,7 @@ class AppUser {
       friends: data?['Friends List'] is Iterable
           ? List.from(data?['Friends List'])
           : null,
+      time: data?['Time']
     );
   }
 
@@ -45,6 +48,7 @@ class AppUser {
       if (code != null) 'Friend Code': code,
       'Friend Requests': requests,
       'Friends List': friends,
+      'Time': time,
     };
   }
 }
