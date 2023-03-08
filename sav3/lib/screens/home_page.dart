@@ -24,41 +24,44 @@ class HomePage extends StatelessWidget {
       ),
       body: Padding(
         padding: const EdgeInsets.all(20.0),
-        child: Column(
-            mainAxisAlignment: MainAxisAlignment.center,
-            crossAxisAlignment: CrossAxisAlignment.center,
-            children: [
-              ElevatedButton(
-                child: const Text('Print Usage Time'),
-                onPressed: () => st.getUsage(),
-              ),
-              ElevatedButton(
-                child: const Text('Sign Out'),
-                onPressed: () {
-                  _auth.signOut();
-                  Navigator.push(context,
-                      MaterialPageRoute(builder: (context) => Matrix()));
+        child: Column(crossAxisAlignment: CrossAxisAlignment.center, children: [
+          FutureBuilder(
+            future: st.getUsage(),
+            builder: (BuildContext context, AsyncSnapshot<String> snapshot) {
+              if (snapshot.data != null) {
+                return Text(snapshot.data!);
+              } else {
+                return Container();
+              }
+            },
+          ),
+          ElevatedButton(
+              child: const Text('Sign Out'),
+              onPressed: () {
+                _auth.signOut();
+                Navigator.push(
+                    context, MaterialPageRoute(builder: (context) => Matrix()));
               }),
-              ElevatedButton(
-                  child: const Text('Friends'),
-                  onPressed: () => Navigator.push(context,
-                      MaterialPageRoute(builder: (context) => FriendsList()))),
-              ElevatedButton(
-                  child: const Text('Profile'),
-                  onPressed: ()  async { FirebaseFirestore.instance
-                          .collection('id map')
-                          .doc(Firestore.getCurrentUser())
-                          .get()
-                          .then((DocumentSnapshot documentSnapshot) async {
-                        String name =
-                            await documentSnapshot.get(FieldPath(['name']));
-                          Navigator.push(
-                              context,
-                              MaterialPageRoute(
-                                  builder: (context) =>
-                                      UserProfile(name)));
-                      });})
-            ]),
+          ElevatedButton(
+              child: const Text('Friends'),
+              onPressed: () => Navigator.push(context,
+                  MaterialPageRoute(builder: (context) => FriendsList()))),
+          ElevatedButton(
+              child: const Text('Profile'),
+              onPressed: () async {
+                FirebaseFirestore.instance
+                    .collection('id map')
+                    .doc(Firestore.getCurrentUser())
+                    .get()
+                    .then((DocumentSnapshot documentSnapshot) async {
+                  String name = await documentSnapshot.get(FieldPath(['name']));
+                  Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                          builder: (context) => UserProfile(name)));
+                });
+              })
+        ]),
       ),
     );
   }

@@ -1,4 +1,3 @@
-import 'dart:math';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/src/widgets/framework.dart';
 import 'package:flutter/src/widgets/placeholder.dart';
@@ -39,7 +38,7 @@ class Firestore {
       code: 0,
       requests: [],
       friends: [],
-      time: Random().nextInt(100),
+      time: 0,
     );
 
     final docUser = FirebaseFirestore.instance
@@ -116,5 +115,16 @@ class Firestore {
     });
     friends.add(currName);
     await requester.update({'Friends List': friends});
+  }
+
+  Future<void> updateTime(int time) async {
+    final curr = FirebaseFirestore.instance
+        .collection('id map')
+        .doc(currentUser)
+        .get()
+        .then((DocumentSnapshot documentSnapshot) async {
+      final user = FirebaseFirestore.instance.collection('users').doc(documentSnapshot.get(FieldPath(['name'])));
+      await user.update({'Time': time});
+    });
   }
 }

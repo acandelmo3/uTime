@@ -6,6 +6,7 @@ import 'package:provider/provider.dart';
 import 'package:sav3/services/root.dart';
 
 Future<void> main() async {
+
   WidgetsFlutterBinding.ensureInitialized();
   await Firebase.initializeApp();
   FirebaseFirestore firestore = FirebaseFirestore.instance;

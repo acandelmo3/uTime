@@ -31,11 +31,11 @@ environment:
 dependencies:
   flutter:
     sdk: flutter
-  firebase_core: ^2.4.1
-  firebase_auth: ^4.2.5
+  firebase_core: ^2.7.1
+  firebase_auth: ^4.2.10
   provider: ^6.0.5
   dob_input_field: ^2.0.0
-  cloud_firestore: ^4.3.1
+  cloud_firestore: ^4.4.4
   usage_stats: ^1.2.0
 
 
