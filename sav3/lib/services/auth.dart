@@ -1,10 +1,9 @@
 import 'package:firebase_auth/firebase_auth.dart';
-
 import 'firestore.dart';
 
 class Auth {
   final FirebaseAuth _auth = FirebaseAuth.instance;
-  final Firestore fs = new Firestore();
+  final Firestore fs = Firestore();
 
   Future register(String email, String password) async {
     try {

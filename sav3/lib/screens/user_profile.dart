@@ -7,6 +7,7 @@ class UserProfile extends StatelessWidget {
   int code = 0;
   String name = '';
   String curr_name = '';
+  String pfp = '';
   List<dynamic> requests = <String>[];
   List<dynamic> friends = <String>[];
 
@@ -23,10 +24,10 @@ class UserProfile extends StatelessWidget {
       final user = FirebaseFirestore.instance
           .collection('users')
           .doc(documentSnapshot.get(FieldPath(['name'])));
-      await user.get()
-          .then((DocumentSnapshot documentSnapshot) {
+      await user.get().then((DocumentSnapshot documentSnapshot) {
         requests = documentSnapshot.get(FieldPath(['Friend Requests']));
         friends = documentSnapshot.get(FieldPath(['Friends List']));
+        pfp = documentSnapshot.get(FieldPath(['pfp']));
       });
     });
 
@@ -35,7 +36,6 @@ class UserProfile extends StatelessWidget {
     }
 
     for (var i in requests) {
-      print(i);
       if (await i == name) {
         return false;
       }
@@ -74,13 +74,18 @@ class UserProfile extends StatelessWidget {
                         textAlign: TextAlign.center,
                         style: const TextStyle(fontSize: 20),
                       ),
-                      const Image(
-                          image: NetworkImage(
-                              'https://static.thenounproject.com/png/5034901-200.png')),
+                      Image(image: NetworkImage(pfp)),
                       if (snapshot.data!)
                         ElevatedButton(
                             child: Text('Add Friend'),
                             onPressed: () => fs.sendRequest(code, name)),
+                      if (!(snapshot.data!))
+                        Row(children: [
+                          ElevatedButton(onPressed: () => print('Goal!'),
+                           child: const Text('Set a Goal')),
+                          ElevatedButton(onPressed: () async => fs.updatePfp(),
+                           child: const Text('Set Picture'))
+                        ],)
                     ]),
               );
             } else {

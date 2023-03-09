@@ -1,9 +1,6 @@
 import 'package:firebase_auth/firebase_auth.dart';
-import 'package:flutter/src/widgets/framework.dart';
-import 'package:flutter/src/widgets/placeholder.dart';
-import 'package:firebase_core/firebase_core.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:provider/provider.dart';
+import 'package:image_picker/image_picker.dart';
 import '../user.dart';
 
 class Firestore {
@@ -123,8 +120,29 @@ class Firestore {
         .doc(currentUser)
         .get()
         .then((DocumentSnapshot documentSnapshot) async {
-      final user = FirebaseFirestore.instance.collection('users').doc(documentSnapshot.get(FieldPath(['name'])));
+      final user = FirebaseFirestore.instance
+          .collection('users')
+          .doc(documentSnapshot.get(FieldPath(['name'])));
       await user.update({'Time': time});
     });
+  }
+
+  Future<void> updatePfp() async {
+    final ImagePicker picker = ImagePicker();
+    XFile? image = await picker.pickImage(source: ImageSource.gallery);
+
+  /*
+    FirebaseFirestore.instance
+        .collection('id map')
+        .doc(currentUser)
+        .get()
+        .then((DocumentSnapshot documentSnapshot) async {
+      final user = FirebaseFirestore.instance
+          .collection('users')
+          .doc(documentSnapshot.get(FieldPath(['name'])));
+      await user.update({'pfp': result});
+      
+    });
+    */
   }
 }

@@ -2,14 +2,42 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:sav3/screens/user_profile.dart';
 import 'package:sav3/services/auth.dart';
-import 'package:sav3/services/screentime.dart';
 import '../services/firestore.dart';
+import '../services/screentime.dart';
 import 'friends_list.dart';
 import 'login_matrix.dart';
 
 class HomePage extends StatelessWidget {
   HomePage({super.key});
-  Screentime st = new Screentime();
+  Firestore fs = new Firestore();
+
+  Future<String> showTime() async {
+    String time = '';
+
+    Screentime st = Screentime();
+    st.getUsage();
+
+    final curr = FirebaseFirestore.instance
+        .collection('id map')
+        .doc(Firestore.getCurrentUser());
+
+    await curr.get().then((DocumentSnapshot documentSnapshot) async {
+      final user = FirebaseFirestore.instance
+          .collection('users')
+          .doc(await documentSnapshot.get(FieldPath(['name'])));
+
+      await user.get().then((DocumentSnapshot documentSnapshot) async {
+        int result = documentSnapshot.get(FieldPath(['Time']));
+
+        time = 'Screentime This Week: ' +
+            ((result / (1000 * 60 * 60)) % 24).toInt().toString() +
+            " hr " +
+            ((result / (1000 * 60) % 60)).toInt().toString() +
+            " min";
+      });
+    });
+    return time;
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -26,7 +54,7 @@ class HomePage extends StatelessWidget {
         padding: const EdgeInsets.all(20.0),
         child: Column(crossAxisAlignment: CrossAxisAlignment.center, children: [
           FutureBuilder(
-            future: st.getUsage(),
+            future: showTime(),
             builder: (BuildContext context, AsyncSnapshot<String> snapshot) {
               if (snapshot.data != null) {
                 return Text(snapshot.data!);

@@ -24,8 +24,8 @@ public class MainActivity extends FlutterActivity {
             if (call.method.equals("usageStats")) {
                 result.success(usageStats(MainActivity.this));
             } else {
-                result.error("FAILURE", null, null);
-            }
+              result.error("FAILURE", null, null);
+            }           
           }
         );
   }
@@ -57,8 +57,8 @@ public class MainActivity extends FlutterActivity {
     return time;
   }
 
-    private static UsageStatsManager getUsageStatsManager(Context context){
-        UsageStatsManager usm = (UsageStatsManager) context.getSystemService("usagestats");
-        return usm;
-    }
+  private static UsageStatsManager getUsageStatsManager(Context context){
+    UsageStatsManager usm = (UsageStatsManager) context.getSystemService("usagestats");
+    return usm;
+  }
 }
