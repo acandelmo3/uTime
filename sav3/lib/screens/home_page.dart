@@ -10,11 +10,10 @@ import 'login_matrix.dart';
 class HomePage extends StatelessWidget {
   HomePage({super.key});
   Firestore fs = new Firestore();
+  Screentime st = Screentime();
 
   Future<String> showTime() async {
     String time = '';
-
-    Screentime st = Screentime();
     st.getUsage();
 
     final curr = FirebaseFirestore.instance
@@ -90,20 +89,21 @@ class HomePage extends StatelessWidget {
                 });
               }),
             FutureBuilder(
-              future: st.getPercent(),
+              future: fs.getGoalPercent(),
               builder: (BuildContext context, AsyncSnapshot<double> snapshot) {
                 if (snapshot.data != null) {
                   //return Text(snapshot.data!);
                   return CircularProgressIndicator(
-                    backgroundColor: Colors.grey[300], 
-                    color: Colors.blue, 
-                    value: st.getCurrentPercent());
+                    backgroundColor: Colors.grey[300],
+                    color: Colors.blue,
+                    value: snapshot.data);
                 } else {
                   return Container();
                   //return;
                 }
               },
             ),
+            
               
               // CircularProgressIndicator(
               //   backgroundColor: Colors.grey[300], 

@@ -1,6 +1,7 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:image_picker/image_picker.dart';
+import 'package:sav3/services/screentime.dart';
 import '../user.dart';
 
 class Firestore {
@@ -131,7 +132,7 @@ class Firestore {
     final ImagePicker picker = ImagePicker();
     XFile? image = await picker.pickImage(source: ImageSource.gallery);
 
-  /*
+    /*
     FirebaseFirestore.instance
         .collection('id map')
         .doc(currentUser)
@@ -144,5 +145,27 @@ class Firestore {
       
     });
     */
+  }
+  
+  Future<double> getGoalPercent() async {
+    Screentime st = Screentime();
+    st.getUsage();
+    
+    double percent = -1;
+    final curr = FirebaseFirestore.instance
+        .collection('id map')
+        .doc(currentUser)
+        .get()
+        .then((DocumentSnapshot documentSnapshot) async {
+      final user = FirebaseFirestore.instance
+          .collection('users')
+          .doc(documentSnapshot.get(FieldPath(['name'])));
+      await user.get().then((DocumentSnapshot documentSnapshot) {
+        double time = documentSnapshot.get(FieldPath(['Time'])).toDouble();
+        double goal = documentSnapshot.get(FieldPath(['Goal'])).toDouble();
+        percent = (time / goal) * 100;
+      });
+    });
+    return percent;
   }
 }
