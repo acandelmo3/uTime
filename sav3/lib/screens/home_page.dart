@@ -88,8 +88,29 @@ class HomePage extends StatelessWidget {
                       MaterialPageRoute(
                           builder: (context) => UserProfile(name)));
                 });
-              })
+              }),
+            FutureBuilder(
+              future: st.getPercent(),
+              builder: (BuildContext context, AsyncSnapshot<double> snapshot) {
+                if (snapshot.data != null) {
+                  //return Text(snapshot.data!);
+                  return CircularProgressIndicator(
+                    backgroundColor: Colors.grey[300], 
+                    color: Colors.blue, 
+                    value: st.getCurrentPercent());
+                } else {
+                  return Container();
+                  //return;
+                }
+              },
+            ),
+              
+              // CircularProgressIndicator(
+              //   backgroundColor: Colors.grey[300], 
+              //   color: Colors.blue, 
+              //   value: st.getCurrentPercent())
         ]),
+        //child: CircularProgressIndicator(backgroundColor: Colors.grey[300], color: Colors.blue)
       ),
     );
   }
