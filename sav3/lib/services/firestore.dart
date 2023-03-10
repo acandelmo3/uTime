@@ -37,6 +37,7 @@ class Firestore {
       requests: [],
       friends: [],
       time: 0,
+      goal: 86400000,
     );
 
     final docUser = FirebaseFirestore.instance
@@ -146,16 +147,16 @@ class Firestore {
     });
     */
   }
-  
+
   Future<double> getGoalPercent() async {
     Screentime st = Screentime();
     st.getUsage();
-    
+
     double percent = -1;
     final curr = FirebaseFirestore.instance
         .collection('id map')
-        .doc(currentUser)
-        .get()
+        .doc(currentUser);
+    await curr.get()
         .then((DocumentSnapshot documentSnapshot) async {
       final user = FirebaseFirestore.instance
           .collection('users')
@@ -163,7 +164,8 @@ class Firestore {
       await user.get().then((DocumentSnapshot documentSnapshot) {
         double time = documentSnapshot.get(FieldPath(['Time'])).toDouble();
         double goal = documentSnapshot.get(FieldPath(['Goal'])).toDouble();
-        percent = (time / goal) * 100;
+        percent = (time / goal);
+        print(percent);
       });
     });
     return percent;

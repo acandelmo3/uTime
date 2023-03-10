@@ -99,7 +99,6 @@ class HomePage extends StatelessWidget {
                     value: snapshot.data);
                 } else {
                   return Container();
-                  //return;
                 }
               },
             ),

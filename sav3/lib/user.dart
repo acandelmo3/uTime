@@ -9,6 +9,7 @@ class AppUser {
   final List<String>? requests;
   final List<String>? friends;
   final int? time;
+  final int? goal;
 
   AppUser({
     this.fName,
@@ -18,6 +19,7 @@ class AppUser {
     this.requests,
     this.friends,
     this.time,
+    this.goal,
   });
 
   factory AppUser.fromFirestore(
@@ -36,7 +38,8 @@ class AppUser {
       friends: data?['Friends List'] is Iterable
           ? List.from(data?['Friends List'])
           : null,
-      time: data?['Time']
+      time: data?['Time'],
+      goal: data?['Goal']
     );
   }
 
@@ -49,6 +52,7 @@ class AppUser {
       'Friend Requests': requests,
       'Friends List': friends,
       'Time': time,
+      'Goal': 86400000
     };
   }
 }
