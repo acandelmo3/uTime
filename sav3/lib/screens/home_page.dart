@@ -10,6 +10,7 @@ import 'login_matrix.dart';
 class HomePage extends StatelessWidget {
   HomePage({super.key});
   Screentime st = new Screentime();
+  //Future<double> test_limit = st.getMins();
 
   @override
   Widget build(BuildContext context) {
@@ -60,8 +61,29 @@ class HomePage extends StatelessWidget {
                       MaterialPageRoute(
                           builder: (context) => UserProfile(name)));
                 });
-              })
+              }),
+            FutureBuilder(
+              future: st.getPercent(),
+              builder: (BuildContext context, AsyncSnapshot<double> snapshot) {
+                if (snapshot.data != null) {
+                  //return Text(snapshot.data!);
+                  return CircularProgressIndicator(
+                    backgroundColor: Colors.grey[300], 
+                    color: Colors.blue, 
+                    value: st.getCurrentPercent());
+                } else {
+                  return Container();
+                  //return;
+                }
+              },
+            ),
+              
+              // CircularProgressIndicator(
+              //   backgroundColor: Colors.grey[300], 
+              //   color: Colors.blue, 
+              //   value: st.getCurrentPercent())
         ]),
+        //child: CircularProgressIndicator(backgroundColor: Colors.grey[300], color: Colors.blue)
       ),
     );
   }
