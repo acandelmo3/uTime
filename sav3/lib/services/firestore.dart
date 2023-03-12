@@ -1,5 +1,7 @@
+import 'dart:io';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_storage/firebase_storage.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:sav3/services/screentime.dart';
 import '../user.dart';
@@ -132,6 +134,9 @@ class Firestore {
   Future<void> updatePfp() async {
     final ImagePicker picker = ImagePicker();
     XFile? image = await picker.pickImage(source: ImageSource.gallery);
+    File file = File(image!.path);
+    FirebaseStorage storage = FirebaseStorage.instance;
+    final storageRef = storage.ref();
 
     /*
     FirebaseFirestore.instance
@@ -153,11 +158,9 @@ class Firestore {
     st.getUsage();
 
     double percent = -1;
-    final curr = FirebaseFirestore.instance
-        .collection('id map')
-        .doc(currentUser);
-    await curr.get()
-        .then((DocumentSnapshot documentSnapshot) async {
+    final curr =
+        FirebaseFirestore.instance.collection('id map').doc(currentUser);
+    await curr.get().then((DocumentSnapshot documentSnapshot) async {
       final user = FirebaseFirestore.instance
           .collection('users')
           .doc(documentSnapshot.get(FieldPath(['name'])));

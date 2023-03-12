@@ -9,15 +9,17 @@ import 'package:workmanager/workmanager.dart';
 @pragma('vm:entry-point')
 Future<void> callbackDispatcher() async {
   Workmanager().executeTask((taskName, inputData) async {
-    await Firebase.initializeApp();
-    Screentime st = Screentime();
-    print('call1');
-    if (taskName == "update-screen-time") {
-      print('call2');
-      await st.getUsage();
-      return Future.value(true);
-    } else {
-      return Future.value(false);
+    try {
+      await Firebase.initializeApp();
+      Screentime st = Screentime();
+      if (taskName == "update-screen-time") {
+        await st.getUsage();
+        return Future.value(true);
+      } else {
+        return Future.value(false);
+      }
+    } catch (e) {
+      throw Exception(e);
     }
   });
 }
@@ -26,9 +28,10 @@ Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await Firebase.initializeApp();
 
-  Workmanager().initialize(callbackDispatcher);
-  Workmanager().registerPeriodicTask("update-screen-time", "simplePeriodicTask",
-      initialDelay: Duration(seconds: 15));
+  Workmanager().initialize(callbackDispatcher, isInDebugMode: true);
+  Workmanager().registerPeriodicTask("simplePeriodicTask", "update-screen-time",
+      initialDelay: Duration(seconds: 15),
+      constraints: Constraints(networkType: NetworkType.connected));
 
   runApp(const MyApp());
 }
