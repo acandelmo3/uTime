@@ -118,7 +118,7 @@ class Firestore {
     await requester.update({'Friends List': friends});
   }
 
-  Future<void> updateTime(int time) async {
+  Future<void> updateTime(double time) async {
     final curr = FirebaseFirestore.instance
         .collection('id map')
         .doc(currentUser)
@@ -165,10 +165,9 @@ class Firestore {
           .collection('users')
           .doc(documentSnapshot.get(FieldPath(['name'])));
       await user.get().then((DocumentSnapshot documentSnapshot) {
-        double time = documentSnapshot.get(FieldPath(['Time'])).toDouble();
+        double time = documentSnapshot.get(FieldPath(['Time']));
         double goal = documentSnapshot.get(FieldPath(['Goal'])).toDouble();
         percent = (time / goal);
-        print(percent);
       });
     });
     return percent;

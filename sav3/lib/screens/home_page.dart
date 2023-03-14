@@ -26,7 +26,7 @@ class HomePage extends StatelessWidget {
           .doc(await documentSnapshot.get(FieldPath(['name'])));
 
       await user.get().then((DocumentSnapshot documentSnapshot) async {
-        int result = documentSnapshot.get(FieldPath(['Time']));
+        double result = documentSnapshot.get(FieldPath(['Time']));
 
         time = 'Screentime This Week: ' +
             ((result / (1000 * 60 * 60)) % 24).toInt().toString() +

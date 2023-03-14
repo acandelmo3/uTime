@@ -8,7 +8,7 @@ class AppUser {
   final int? code;
   final List<String>? requests;
   final List<String>? friends;
-  final int? time;
+  final double? time;
   final int? goal;
 
   AppUser({

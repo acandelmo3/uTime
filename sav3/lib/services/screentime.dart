@@ -7,28 +7,33 @@ import 'firestore.dart';
 class Screentime {
   static const platform = MethodChannel("com.example/sav3");
   Future<void> prepUsage() async {
-      if (Platform.isAndroid) {
-        await platform.invokeMethod('prepStats');
-        Firestore fs = Firestore();
-      } else if (Platform.isIOS) {
-        //INVOKE IOS METHOD
-      }
+    if (Platform.isAndroid) {
+      await platform.invokeMethod('prepStats');
+      Firestore fs = Firestore();
+    } else if (Platform.isIOS) {
+      //INVOKE IOS METHOD
+    }
   }
 
-  Future<int> getUsage() async {
-    int result = -1;
+  Future<double> getUsage() async {
+    double result = -1;
     FirebaseAuth.instance.authStateChanges().listen((User? user) async {
-      Firestore fs = Firestore();
-      var end = DateTime.now();
-      var start = end.subtract(Duration(days: end.weekday - 1));
+      if (user != null) {
+        Firestore fs = Firestore();
+        var end = DateTime.now();
+        var start = DateTime.now().subtract(Duration(days: end.weekday - 1));
+        start = start.subtract(Duration(hours: start.hour));
+        start = start.subtract(Duration(minutes: start.minute));
+        start = start.subtract(Duration(seconds: start.second));
 
-      double total = 0;
-      List<UsageInfo> t = await UsageStats.queryUsageStats(start, end);
-      for (var i in t) {
-        total += double.parse(i.totalTimeInForeground!);
+        double total = 0;
+        List<UsageInfo> t = await UsageStats.queryUsageStats(start, end);
+        for (var i in t) {
+          total += double.parse(i.totalTimeInForeground!);
+        }
+        result = total;
+        await fs.updateTime(result);
       }
-      result = total.toInt();
-      fs.updateTime(result);
     });
     return result;
   }
