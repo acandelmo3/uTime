@@ -73,7 +73,6 @@ class HomePage extends StatelessWidget {
               future: fs.getGoalPercent(),
               builder: (BuildContext context, AsyncSnapshot<double> snapshot) {
                 if (snapshot.data != null) {
-                  //return Text(snapshot.data!);
                   return CircularProgressIndicator(
                     backgroundColor: Colors.grey[300],
                     color: Colors.blue,
@@ -83,14 +82,7 @@ class HomePage extends StatelessWidget {
                 }
               },
             ),
-            
-              
-              // CircularProgressIndicator(
-              //   backgroundColor: Colors.grey[300], 
-              //   color: Colors.blue, 
-              //   value: st.getCurrentPercent())
         ]),
-        //child: CircularProgressIndicator(backgroundColor: Colors.grey[300], color: Colors.blue)
       ),
     );
   }

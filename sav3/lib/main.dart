@@ -34,8 +34,8 @@ Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await Firebase.initializeApp();
   await Workmanager().initialize(callbackDispatcher, isInDebugMode: true);
-  await Workmanager().registerPeriodicTask(
-      "task-identifier", "simplePeriodicTask",
+  await Workmanager().registerOneOffTask(
+      "task-identifier", "simpleTask",
       initialDelay: const Duration(seconds: 10),
       constraints: Constraints(networkType: NetworkType.connected));
   runApp(const MyApp());
