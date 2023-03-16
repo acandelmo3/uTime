@@ -16,25 +16,23 @@ class Screentime {
   }
 
   Future<double> getUsage() async {
-    double result = -1;
-    FirebaseAuth.instance.authStateChanges().listen((User? user) async {
-      if (user != null) {
-        Firestore fs = Firestore();
-        var end = DateTime.now();
-        var start = DateTime.now().subtract(Duration(days: end.weekday - 1));
-        start = start.subtract(Duration(hours: start.hour));
-        start = start.subtract(Duration(minutes: start.minute));
-        start = start.subtract(Duration(seconds: start.second));
-
-        double total = 0;
-        List<UsageInfo> t = await UsageStats.queryUsageStats(start, end);
-        for (var i in t) {
-          total += double.parse(i.totalTimeInForeground!);
-        }
-        result = total;
-        await fs.updateTime(result);
+    UsageStats.checkUsagePermission().then((bool? b) async {
+      if (!b!) {
+        await prepUsage();
       }
     });
-    return result;
+
+    var end = DateTime.now();
+    var start = DateTime.now().subtract(Duration(days: end.weekday - 1));
+    start = start.subtract(Duration(hours: start.hour));
+    start = start.subtract(Duration(minutes: start.minute));
+    start = start.subtract(Duration(seconds: start.second));
+
+    double total = 0;
+    List<UsageInfo> t = await UsageStats.queryUsageStats(start, end);
+    for (var i in t) {
+      total += double.parse(i.totalTimeInForeground!);
+    }
+    return total;
   }
 }

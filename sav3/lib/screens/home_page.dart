@@ -9,32 +9,13 @@ import 'login_matrix.dart';
 
 class HomePage extends StatelessWidget {
   HomePage({super.key});
-  Firestore fs = new Firestore();
   Screentime st = Screentime();
 
   Future<String> showTime() async {
-    String time = '';
-    st.getUsage();
-
-    final curr = FirebaseFirestore.instance
-        .collection('id map')
-        .doc(Firestore.getCurrentUser());
-
-    await curr.get().then((DocumentSnapshot documentSnapshot) async {
-      final user = FirebaseFirestore.instance
-          .collection('users')
-          .doc(await documentSnapshot.get(FieldPath(['name'])));
-
-      await user.get().then((DocumentSnapshot documentSnapshot) async {
-        double result = documentSnapshot.get(FieldPath(['Time']));
-
-        time = 'Screentime This Week: ' +
-            ((result / (1000 * 60 * 60)) % 24).toInt().toString() +
-            " hr " +
-            ((result / (1000 * 60) % 60)).toInt().toString() +
-            " min";
-      });
-    });
+    double result = await st.getUsage();
+    int hrs = ((result / (1000 * 60 * 60)) % 24).toInt();
+    int mins = ((result / (1000 * 60) % 60)).toInt();
+    String time = 'Screentime This Week: $hrs hrs $mins mins';
     return time;
   }
 
@@ -67,7 +48,7 @@ class HomePage extends StatelessWidget {
               onPressed: () {
                 _auth.signOut();
                 Navigator.push(
-                    context, MaterialPageRoute(builder: (context) => Matrix()));
+                    context, MaterialPageRoute(builder: (context) => const Matrix()));
               }),
           ElevatedButton(
               child: const Text('Friends'),

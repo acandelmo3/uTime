@@ -1,12 +1,14 @@
 import 'package:firebase_auth/firebase_auth.dart';
-import 'package:flutter/src/widgets/framework.dart';
-import 'package:flutter/src/widgets/placeholder.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:provider/provider.dart';
 import 'package:sav3/screens/home_page.dart';
 import 'package:sav3/screens/login_matrix.dart';
 
-import 'firestore.dart';
-
+/*
+* This class acts as a checkpoint to ensure the user is
+* signed in using Firebase Authentication before navigating
+* them to the app.
+*/
 class Root extends StatelessWidget {
   const Root({super.key});
 
@@ -14,7 +16,7 @@ class Root extends StatelessWidget {
   Widget build(BuildContext context) {
     final user = Provider.of<User?>(context);
     if (user == null) {
-      return Matrix();
+      return const Matrix();
     } else {
       return HomePage();
     }
