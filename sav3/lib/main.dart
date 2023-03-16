@@ -1,4 +1,3 @@
-import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
@@ -14,17 +13,16 @@ var logger = Logger();
 @pragma('vm:entry-point')
 void callbackDispatcher() {
   Workmanager().executeTask((taskName, inputData) async {
+    logger.d('Executing...');
     Screentime st = Screentime();
-    double time = await st.getUsage();
+    Firestore fs = Firestore();
     await Firebase.initializeApp();
     try {
-      final user = FirebaseFirestore.instance
-          .collection('users')
-          .doc('Anthony Candelmo');
-      logger.d('TimeL:  $time');
-      await user.update({'Time': time});
-    } catch (e) {
-      throw Exception(e);
+      double time = await st.getUsage();
+      await fs.updateTime(time);
+      logger.d('Time updated!: $time');
+    } catch (error) {
+      logger.d('Exception thrown!: $error');
     }
     return Future.value(false);
   });
@@ -34,10 +32,11 @@ Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await Firebase.initializeApp();
   await Workmanager().initialize(callbackDispatcher, isInDebugMode: true);
-  await Workmanager().registerOneOffTask(
-      "task-identifier", "simpleTask",
-      initialDelay: const Duration(seconds: 10),
-      constraints: Constraints(networkType: NetworkType.connected));
+  await Workmanager()
+      .registerPeriodicTask("task-identifier", "simplePeriodicTask",
+          //initialDelay: const Duration(seconds: 0),
+          constraints: Constraints(networkType: NetworkType.connected));
+  logger.d('Launching App!');
   runApp(const MyApp());
 }
 

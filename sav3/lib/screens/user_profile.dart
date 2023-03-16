@@ -1,4 +1,6 @@
+import 'dart:typed_data';
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/material.dart';
 import 'package:sav3/services/firestore.dart';
 
@@ -50,6 +52,14 @@ class UserProfile extends StatelessWidget {
     return true;
   }
 
+  Future<Uint8List?> getPfp() async {
+    FirebaseStorage storage = FirebaseStorage.instance;
+    final imageRef = storage.ref().child('pfps/$name');
+    const oneMegabyte = 1024 * 1024;
+    final Uint8List? data = await imageRef.getData(oneMegabyte);
+    return data;
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -74,18 +84,32 @@ class UserProfile extends StatelessWidget {
                         textAlign: TextAlign.center,
                         style: const TextStyle(fontSize: 20),
                       ),
-                      Image(image: NetworkImage(pfp)),
+                      FutureBuilder<Uint8List?>(
+                          future: getPfp(),
+                          builder: (BuildContext context,
+                              AsyncSnapshot<Uint8List?> snapshot) {
+                            if (snapshot.hasData) {
+                              return Container(
+                                width: 200,
+                                height: 200,
+                                decoration: BoxDecoration(
+                                  shape: BoxShape.circle,
+                                  image: DecorationImage(image: Image.memory(snapshot.data!).image,
+                                  fit: BoxFit.fill)
+                                ),
+                              );
+                            } else {
+                              return Container();
+                            }
+                          }),
                       if (snapshot.data!)
                         ElevatedButton(
                             child: Text('Add Friend'),
                             onPressed: () => fs.sendRequest(code, name)),
                       if (!(snapshot.data!))
-                        Row(children: [
-                          ElevatedButton(onPressed: () => print('Goal!'),
-                           child: const Text('Set a Goal')),
-                          ElevatedButton(onPressed: () async => fs.updatePfp(),
-                           child: const Text('Set Picture'))
-                        ],)
+                            ElevatedButton(
+                                onPressed: () async => fs.updatePfp(),
+                                child: const Text('Set Picture'))
                     ]),
               );
             } else {

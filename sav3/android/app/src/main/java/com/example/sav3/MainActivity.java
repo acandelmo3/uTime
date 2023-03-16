@@ -29,6 +29,10 @@ public class MainActivity extends FlutterActivity {
         );
   }
 
+  /*
+   * Creates an intent to enable UsageStats in settings and initiates the activity.
+   * @param Context context is the context of the app
+   */
   private void prepStats(Context context) {
     Intent intent = new Intent(Settings.ACTION_USAGE_ACCESS_SETTINGS);
         startActivity(intent);

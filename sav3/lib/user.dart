@@ -1,6 +1,8 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:sav3/services/firestore.dart';
 
+/*
+* This class creates a structure to store users in the database.
+*/
 class AppUser {
   final String? fName;
   final String? lName;
@@ -43,6 +45,10 @@ class AppUser {
     );
   }
 
+/*
+* Instantiates the data in the AppUser object
+* @return Map<String, dynamic> is the container for the user data
+*/
   Map<String, dynamic> toFirestore() {
     return {
       if (fName != null) 'First Name': fName,

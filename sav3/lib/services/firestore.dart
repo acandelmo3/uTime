@@ -2,6 +2,7 @@ import 'dart:io';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_storage/firebase_storage.dart';
+import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:sav3/services/screentime.dart';
 import '../user.dart';
@@ -172,27 +173,25 @@ class Firestore {
     });
   }
 
-//TODO Update the PFP system
+/*
+* Uses the ImagePicker plugin to store new profile picture in
+* Firebase Storage.
+*/
   Future<void> updatePfp() async {
     final ImagePicker picker = ImagePicker();
     XFile? image = await picker.pickImage(source: ImageSource.gallery);
     File file = File(image!.path);
     FirebaseStorage storage = FirebaseStorage.instance;
-    final storageRef = storage.ref();
 
-    /*
     FirebaseFirestore.instance
         .collection('id map')
         .doc(currentUser)
         .get()
         .then((DocumentSnapshot doc) async {
-      final user = FirebaseFirestore.instance
-          .collection('users')
-          .doc(doc.get(FieldPath(['name'])));
-      await user.update({'pfp': result});
-      
+      String name = doc.get(FieldPath(const ['name']));
+      final storageRef = storage.ref().child('pfps/$name');
+       await storageRef.putFile(file);
     });
-    */
   }
 
 /*
@@ -213,8 +212,7 @@ class Firestore {
           .doc(doc.get(FieldPath(const ['name'])));
       await user.get().then((DocumentSnapshot doc) {
         double time = doc.get(FieldPath(const ['Time']));
-        double goal =
-            doc.get(FieldPath(const ['Goal'])).toDouble();
+        double goal = doc.get(FieldPath(const ['Goal'])).toDouble();
         percent = (time / goal);
       });
     });
