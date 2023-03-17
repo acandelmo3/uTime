@@ -1,5 +1,6 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
+import 'package:sav3/screens/ui_test.dart';
 import '../services/firestore.dart';
 
 class FriendRequests extends StatefulWidget {
@@ -35,8 +36,10 @@ class _FriendRequestsState extends State<FriendRequests> {
               Text(friend),
               Spacer(flex: 8),
               ElevatedButton(
-                  onPressed: () {
-                    fs.acceptRequest(friend);
+                  onPressed: () async {
+                    await fs.acceptRequest(friend);
+                    Navigator.push(context,
+                      MaterialPageRoute(builder: (context) => UITest()));
                   },
                   child: Text('Accept')),
             ],

@@ -61,7 +61,7 @@ class _FriendsListState extends State<FriendsList> {
           final friendDoc =
               FirebaseFirestore.instance.collection('users').doc(friend);
           await friendDoc.get().then((DocumentSnapshot doc) {
-            int time = doc.get(FieldPath(['Time']));
+            int time = doc.get(FieldPath(['Time'])).toInt();
             for (int j = 0; j < widgetOrder.length; j++) {
               if (time > widgetOrder.elementAt(j)) {
                 indexToAdd = j;

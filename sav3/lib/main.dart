@@ -20,7 +20,6 @@ Future<void> callbackDispatcher() async {
     Firestore fs = Firestore();
     try {
       double time = await st.getUsage();
-      await fs.updateTime(time);
       logger.d('Time updated!: $time');
     } catch (error) {
       logger.d('Exception thrown!: $error');
@@ -35,7 +34,7 @@ Future<void> main() async {
   await Workmanager().initialize(callbackDispatcher, isInDebugMode: true);
   await Workmanager().registerPeriodicTask(
       "task-identifier", "simplePeriodicTask",
-      initialDelay: Duration(minutes: 2),
+      initialDelay: const Duration(minutes: 2),
       constraints: Constraints(networkType: NetworkType.connected));
   logger.d('Launching App!');
   runApp(const MyApp());

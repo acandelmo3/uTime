@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:sav3/screens/ui_test.dart';
 import 'package:sav3/services/auth.dart';
 import 'package:sav3/services/firestore.dart';
 import 'home_page.dart';
@@ -97,7 +98,7 @@ class _RegisterState extends State<Register> {
                       fs.getCurrent();
                       fs.getData(fName, lName, result);
                       Navigator.push(context,
-                          MaterialPageRoute(builder: (context) => HomePage()));
+                          MaterialPageRoute(builder: (context) =>UITest()));
                     }
                   }
                 },

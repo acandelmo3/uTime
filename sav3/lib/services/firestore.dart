@@ -1,4 +1,5 @@
 import 'dart:io';
+import 'package:http/http.dart' as http;
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_storage/firebase_storage.dart';
@@ -53,7 +54,6 @@ class Firestore {
     final user = AppUser(
       fName: fName,
       lName: lName,
-      pfp: '',
       code: 0,
       requests: [],
       friends: [],
@@ -190,7 +190,7 @@ class Firestore {
         .then((DocumentSnapshot doc) async {
       String name = doc.get(FieldPath(const ['name']));
       final storageRef = storage.ref().child('pfps/$name');
-       await storageRef.putFile(file);
+      await storageRef.putFile(file);
     });
   }
 

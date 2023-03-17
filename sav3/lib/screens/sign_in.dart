@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:sav3/screens/ui_test.dart';
 import '../services/auth.dart';
-import '../services/firestore.dart';
-import 'home_page.dart';
 
 class SignIn extends StatefulWidget {
   const SignIn({super.key});
@@ -54,7 +53,7 @@ class _SignInState extends State<SignIn> {
                 dynamic result = await _auth.signIn(email, password);
                 if (result != null) {
                   Navigator.push(context,
-                      MaterialPageRoute(builder: (context) => HomePage()));
+                      MaterialPageRoute(builder: (context) => UITest()));
                 } else {
                   print('NEED TO WARN USER HERE');
                 }

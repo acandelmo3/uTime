@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:sav3/services/firestore.dart';
 import 'package:sav3/screens/user_profile.dart';
 
+import 'friend_requests.dart';
+
 class AddFriends extends StatelessWidget {
   AddFriends({super.key});
   final Firestore fs = Firestore();
@@ -21,9 +23,14 @@ class AddFriends extends StatelessWidget {
       body: Padding(
         padding: const EdgeInsets.all(20.0),
         child: Column(
-            mainAxisAlignment: MainAxisAlignment.center,
             crossAxisAlignment: CrossAxisAlignment.center,
             children: [
+              ElevatedButton(
+                child: const Text('Friend Requests'),
+                onPressed: () => Navigator.push(context,
+                    MaterialPageRoute(builder: (context) => FriendRequests())),
+              ),
+              const Padding(padding: EdgeInsets.symmetric(vertical: 50)),
               TextFormField(
                 controller: _controller,
                 obscureText: false,

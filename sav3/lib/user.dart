@@ -6,7 +6,6 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 class AppUser {
   final String? fName;
   final String? lName;
-  final String? pfp;
   final int? code;
   final List<String>? requests;
   final List<String>? friends;
@@ -16,7 +15,6 @@ class AppUser {
   AppUser({
     this.fName,
     this.lName,
-    this.pfp,
     this.code,
     this.requests,
     this.friends,
@@ -32,7 +30,6 @@ class AppUser {
     return AppUser(
       fName: data?['First Name'],
       lName: data?['Last Name'],
-      pfp: data?['Profile Picture'],
       code: data?['Friend Code'],
       requests: data?['Friend Requests'] is Iterable
           ? List.from(data?['Friend Requests'])
@@ -53,7 +50,6 @@ class AppUser {
     return {
       if (fName != null) 'First Name': fName,
       if (lName != null) 'Last Name': lName,
-      'pfp': 'https://static.thenounproject.com/png/5034901-200.png',
       if (code != null) 'Friend Code': code,
       'Friend Requests': requests,
       'Friends List': friends,

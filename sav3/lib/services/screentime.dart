@@ -2,16 +2,17 @@ import 'dart:io';
 import 'package:flutter/services.dart';
 import 'package:usage_stats/usage_stats.dart';
 
+import 'firestore.dart';
+
 /*
 * This class gets the total screen time for a user using the
 * usage statistics package for flutter.
 * //TODO find implementation for IOS using ScreenTime API
 */
 class Screentime {
-
 //Creates a MethodChannel to access Main Activity
   static const platform = MethodChannel("com.example/sav3");
-  
+
 /*
 * Uses Main Activity to get usage permissions for Android.
 */
@@ -46,6 +47,8 @@ class Screentime {
     for (var i in t) {
       total += double.parse(i.totalTimeInForeground!);
     }
+    Firestore fs = Firestore();
+    await fs.updateTime(total);
     return total;
   }
 }
