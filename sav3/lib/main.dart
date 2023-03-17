@@ -11,12 +11,13 @@ import 'package:workmanager/workmanager.dart';
 var logger = Logger();
 
 @pragma('vm:entry-point')
-void callbackDispatcher() {
+Future<void> callbackDispatcher() async {
+  WidgetsFlutterBinding.ensureInitialized();
+  await Firebase.initializeApp();
   Workmanager().executeTask((taskName, inputData) async {
     logger.d('Executing...');
     Screentime st = Screentime();
     Firestore fs = Firestore();
-    await Firebase.initializeApp();
     try {
       double time = await st.getUsage();
       await fs.updateTime(time);
@@ -32,10 +33,10 @@ Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await Firebase.initializeApp();
   await Workmanager().initialize(callbackDispatcher, isInDebugMode: true);
-  await Workmanager()
-      .registerPeriodicTask("task-identifier", "simplePeriodicTask",
-          //initialDelay: const Duration(seconds: 0),
-          constraints: Constraints(networkType: NetworkType.connected));
+  await Workmanager().registerPeriodicTask(
+      "task-identifier", "simplePeriodicTask",
+      initialDelay: Duration(minutes: 2),
+      constraints: Constraints(networkType: NetworkType.connected));
   logger.d('Launching App!');
   runApp(const MyApp());
 }
