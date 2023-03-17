@@ -35,7 +35,7 @@ class BuildFriends {
           await friendDoc.get().then((DocumentSnapshot doc) {
             int time = doc.get(FieldPath(['Time'])).toInt();
             for (int j = 0; j < widgetOrder.length; j++) {
-              if (time > widgetOrder.elementAt(j)) {
+              if (time < widgetOrder.elementAt(j)) {
                 indexToAdd = j;
                 break;
               }
