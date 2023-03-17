@@ -1,6 +1,6 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
-import 'package:sav3/screens/ui_test.dart';
+import 'package:uTime/screens/ui_test.dart';
 import '../services/firestore.dart';
 
 class FriendRequests extends StatefulWidget {

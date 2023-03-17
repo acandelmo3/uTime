@@ -3,9 +3,8 @@ import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:logger/logger.dart';
 import 'package:provider/provider.dart';
-import 'package:sav3/services/firestore.dart';
-import 'package:sav3/services/root.dart';
-import 'package:sav3/services/screentime.dart';
+import 'package:uTime/services/root.dart';
+import 'package:uTime/services/screentime.dart';
 import 'package:workmanager/workmanager.dart';
 
 var logger = Logger();
@@ -13,11 +12,10 @@ var logger = Logger();
 @pragma('vm:entry-point')
 Future<void> callbackDispatcher() async {
   WidgetsFlutterBinding.ensureInitialized();
-  await Firebase.initializeApp();
   Workmanager().executeTask((taskName, inputData) async {
+    await Firebase.initializeApp();
     logger.d('Executing...');
     Screentime st = Screentime();
-    Firestore fs = Firestore();
     try {
       double time = await st.getUsage();
       logger.d('Time updated!: $time');
@@ -31,7 +29,7 @@ Future<void> callbackDispatcher() async {
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await Firebase.initializeApp();
-  await Workmanager().initialize(callbackDispatcher, isInDebugMode: true);
+  await Workmanager().initialize(callbackDispatcher);
   await Workmanager().registerPeriodicTask(
       "task-identifier", "simplePeriodicTask",
       initialDelay: const Duration(minutes: 2),

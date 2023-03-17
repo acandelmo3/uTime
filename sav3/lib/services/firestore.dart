@@ -5,7 +5,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
-import 'package:sav3/services/screentime.dart';
+import 'package:uTime/services/screentime.dart';
 import '../user.dart';
 
 /*
@@ -217,5 +217,31 @@ class Firestore {
       });
     });
     return percent;
+  }
+
+  Future<void> setGoal(int goal) async {
+    final curr =
+        FirebaseFirestore.instance.collection('id map').doc(currentUser);
+    await curr.get().then((DocumentSnapshot doc) async {
+      final user = FirebaseFirestore.instance
+          .collection('users')
+          .doc(doc.get(FieldPath(const ['name'])));
+      await user.update({'Goal': (goal * 60 * 60 * 1000)});
+    });
+  }
+
+  Future<int> getGoal() async {
+    int goal = 0;
+    final curr =
+        FirebaseFirestore.instance.collection('id map').doc(currentUser);
+    await curr.get().then((DocumentSnapshot doc) async {
+      final user = FirebaseFirestore.instance
+          .collection('users')
+          .doc(doc.get(FieldPath(const ['name'])));
+      await user.get().then((DocumentSnapshot doc) {
+        goal = doc.get(FieldPath(['Goal']));
+      });
+    });
+    return goal ~/ (1000 * 60 * 60);
   }
 }

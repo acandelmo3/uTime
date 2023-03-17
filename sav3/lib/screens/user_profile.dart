@@ -2,8 +2,8 @@ import 'dart:typed_data';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/material.dart';
-import 'package:sav3/screens/ui_test.dart';
-import 'package:sav3/services/firestore.dart';
+import 'package:uTime/screens/ui_test.dart';
+import 'package:uTime/services/firestore.dart';
 
 class UserProfile extends StatelessWidget {
   final Firestore fs = Firestore();
@@ -13,9 +13,13 @@ class UserProfile extends StatelessWidget {
   String pfp = '';
   List<dynamic> requests = <String>[];
   List<dynamic> friends = <String>[];
+  List<int> goals = <int>[];
 
   UserProfile(String name) {
     this.name = name;
+    for (int i = 0; i < 55; i++) {
+      goals.add(i);
+    }
   }
 
   Future<bool> createButton() async {
@@ -115,13 +119,45 @@ class UserProfile extends StatelessWidget {
                                 child: Text('Add Friend'),
                                 onPressed: () async {
                                   await fs.sendRequest(code, name);
-                                  Navigator.push(context,
-                                     MaterialPageRoute(builder: (context) => UITest()));
+                                  Navigator.push(
+                                      context,
+                                      MaterialPageRoute(
+                                          builder: (context) => UITest()));
                                 }),
                           if (!(snapshot.data!))
-                            ElevatedButton(
-                                onPressed: () async => fs.updatePfp(),
-                                child: const Text('Set Picture'))
+                            Row(children: [
+                              ElevatedButton(
+                                  onPressed: () async => fs.updatePfp(),
+                                  child: const Text('Set Picture')),
+                              const Padding(
+                                  padding:
+                                      EdgeInsets.symmetric(horizontal: 20)),
+                              FutureBuilder<int>(
+                                  future: fs.getGoal(),
+                                  builder: (BuildContext context,
+                                      AsyncSnapshot<int> snapshot) {
+                                    if (snapshot.hasData) {
+                                      return DropdownButton<int>(
+                                        value: snapshot.data,
+                                        onChanged: (int? value) {
+                                          fs.setGoal(value!);
+                                          Navigator.push(
+                                            context,
+                                            MaterialPageRoute(
+                                              builder: (context) => UserProfile(name)));
+                                        },
+                                        items: goals.map<DropdownMenuItem<int>>(
+                                            (int value) {
+                                          return DropdownMenuItem<int>(
+                                              value: value,
+                                              child: Text('$value'));
+                                        }).toList(),
+                                      );
+                                    } else {
+                                      return Container();
+                                    }
+                                  })
+                            ])
                         ]));
               } else {
                 return Container();

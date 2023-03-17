@@ -1,7 +1,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
-import 'package:sav3/screens/user_profile.dart';
-import 'package:sav3/services/auth.dart';
+import 'package:uTime/screens/user_profile.dart';
+import 'package:uTime/services/auth.dart';
 import '../services/build_friends.dart';
 import '../services/firestore.dart';
 import '../services/screentime.dart';
@@ -56,12 +56,10 @@ class UITest extends StatelessWidget {
                     });
                   },
                   icon: const Icon(Icons.person)),
-              /*
               IconButton(
                   onPressed: () => Navigator.push(context,
-                      MaterialPageRoute(builder: (context) => FriendsList())),
-                  icon: const Icon(Icons.person)),
-              */
+                      MaterialPageRoute(builder: (context) => UITest())),
+                  icon: const Icon(Icons.refresh)),
             ],
           )),
       body: Padding(

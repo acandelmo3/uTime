@@ -1,6 +1,6 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
-import 'package:sav3/screens/user_profile.dart';
+import 'package:uTime/screens/user_profile.dart';
 
 import '../services/firestore.dart';
 import 'add_friends.dart';

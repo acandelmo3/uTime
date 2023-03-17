@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:sav3/screens/ui_test.dart';
-import 'package:sav3/services/auth.dart';
-import 'package:sav3/services/firestore.dart';
+import 'package:uTime/screens/ui_test.dart';
+import 'package:uTime/services/auth.dart';
+import 'package:uTime/services/firestore.dart';
 import 'home_page.dart';
 
 class Register extends StatefulWidget {

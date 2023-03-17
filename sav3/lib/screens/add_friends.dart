@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:sav3/services/firestore.dart';
-import 'package:sav3/screens/user_profile.dart';
+import 'package:uTime/services/firestore.dart';
+import 'package:uTime/screens/user_profile.dart';
 
 import 'friend_requests.dart';
 

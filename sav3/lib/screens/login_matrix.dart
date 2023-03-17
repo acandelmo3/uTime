@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:sav3/screens/register.dart';
-import 'package:sav3/screens/sign_in.dart';
+import 'package:uTime/screens/register.dart';
+import 'package:uTime/screens/sign_in.dart';
 
 class Matrix extends StatefulWidget {
   const Matrix({super.key});
