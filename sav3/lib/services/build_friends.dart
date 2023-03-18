@@ -56,12 +56,30 @@ class BuildFriends {
         while (i < friendList.length) {
           int time = widgetOrder.elementAt(i) ~/ (1000 * 60 * 60);
           String name = friendList.elementAt(i++);
-          reqWidgets.add(Row(
+          reqWidgets.add(
+            Padding(padding: EdgeInsets.symmetric(vertical: 5), child: 
+            //Container(height: 50, child:
+            //Spacer(),
+            Container(
+              //Spacer(),
+                //alignment: Center,
+                height: 30,
+                width: 330,
+                decoration: const BoxDecoration(
+                  color: Colors.white,
+                  borderRadius: BorderRadius.all(Radius.circular(10))),
+                  child: 
+            Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
+              //Spacer(),
               RichText(
                 text: TextSpan(
                     text: '$i. $name',
-                    style: const TextStyle(color: Colors.black),
+                    style: const TextStyle(color: Color.fromARGB(255, 75, 57, 233),
+                                fontWeight: FontWeight.bold,
+                                fontSize: 15,
+                                ),
                     recognizer: TapGestureRecognizer()
                       ..onTap = () {
                         Navigator.push(
@@ -71,10 +89,16 @@ class BuildFriends {
                                     UserProfile(friendList.elementAt(i - 1))));
                       }),
               ),
-              const Spacer(),
-              Text('$time hrs'),
+              //const Spacer(),
+              Text('$time hrs', style: const TextStyle(
+                                fontWeight: FontWeight.bold,
+                                color: Color.fromARGB(255, 75, 57, 233),
+                                fontSize: 15,
+                                )),
+              //Container(width: 5),
+              
             ],
-          ));
+          ))));
         }
       });
     });

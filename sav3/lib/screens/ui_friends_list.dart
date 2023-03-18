@@ -1,12 +1,12 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:uTime/screens/user_profile.dart';
-
+import '../services/build_friends.dart';
 import '../services/firestore.dart';
 import 'add_friends.dart';
 import 'friend_requests.dart';
 import 'ui_friend_requests.dart';
-import 'ui_test.dart';
+import 'ui_test_copy.dart';
 import 'ui_add_friends.dart';
 import 'ui_user_profile.dart';
 
@@ -21,7 +21,7 @@ class _UIFriendsListState extends State<UIFriendsList> {
 
   
   
-  Future<List<Widget>> BuildList() async {
+  Future<List<Widget>> BuildList1() async {
     List<Widget> reqWidgets = <Widget>[];
     List<String> friendList = <String>[];
     List<int> widgetOrder = <int>[];
@@ -374,6 +374,20 @@ class _UIFriendsListState extends State<UIFriendsList> {
           ]),
           
     //);
+        FutureBuilder(
+          future: BuildFriends.buildList(context),
+          builder: (BuildContext context,
+              AsyncSnapshot<List<Widget>> snapshot) {
+            if (snapshot.hasData) {
+              return Padding(
+                  padding: const EdgeInsets.symmetric(
+                      horizontal: 20.0),
+                  child: Column(children: snapshot.data!));
+            } else {
+              return Container();
+            }
+          })
+          /*
         FutureBuilder<List<Widget>>(
           future: BuildList(),
           builder:
@@ -394,7 +408,7 @@ class _UIFriendsListState extends State<UIFriendsList> {
               );
               */
             }
-          }),
+          }),*/
         //])
           ]
     )]

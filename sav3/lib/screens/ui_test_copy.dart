@@ -19,6 +19,7 @@ class UITest extends StatelessWidget {
 
   Future<String> showTime() async {
     double result = await st.getUsage();
+    //fs.updateTime(result);
     int hrs = ((result / (1000 * 60 * 60)) % 24).toInt();
     int mins = ((result / (1000 * 60) % 60)).toInt();
     String time = 'Screentime This Week:\n$hrs hrs $mins mins';
