@@ -2,7 +2,7 @@ import 'dart:typed_data';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/material.dart';
-import 'package:sav3/services/firestore.dart';
+import 'package:uTime/services/firestore.dart';
 import 'ui_friends_list.dart';
 import 'ui_test.dart';
 

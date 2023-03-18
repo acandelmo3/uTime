@@ -219,7 +219,6 @@ class Firestore {
     return percent;
   }
 
-<<<<<<< Updated upstream
   Future<void> setGoal(int goal) async {
     final curr =
         FirebaseFirestore.instance.collection('id map').doc(currentUser);
@@ -233,14 +232,6 @@ class Firestore {
 
   Future<int> getGoal() async {
     int goal = 0;
-=======
-  Future<double> getGoal() async {
-    Screentime st = Screentime();
-    await st.getUsage();
-
-    double percent = -1;
-    double goal = 0.0;
->>>>>>> Stashed changes
     final curr =
         FirebaseFirestore.instance.collection('id map').doc(currentUser);
     await curr.get().then((DocumentSnapshot doc) async {
@@ -248,55 +239,10 @@ class Firestore {
           .collection('users')
           .doc(doc.get(FieldPath(const ['name'])));
       await user.get().then((DocumentSnapshot doc) {
-<<<<<<< Updated upstream
         goal = doc.get(FieldPath(['Goal']));
       });
     });
     return goal ~/ (1000 * 60 * 60);
-=======
-        //double time = doc.get(FieldPath(const ['Time']));
-        goal = doc.get(FieldPath(const ['Goal'])).toDouble();
-        //return goal;
-        //percent = (time / goal);
-      });
-    });
-    return goal;
-  }
-
-  Future<double> getTime() async {
-    Screentime st = Screentime();
-    await st.getUsage();
-
-    //double percent = -1;
-    double time = 0.0;
-    final curr =
-        FirebaseFirestore.instance.collection('id map').doc(currentUser);
-    await curr.get().then((DocumentSnapshot doc) async {
-      final user = FirebaseFirestore.instance
-          .collection('users')
-          .doc(doc.get(FieldPath(const ['name'])));
-      await user.get().then((DocumentSnapshot doc) {
-        time = doc.get(FieldPath(const ['Time']));
-        //goal = doc.get(FieldPath(const ['Goal'])).toDouble();
-        //return goal;
-        //percent = (time / goal);
-      });
-    });
-    return time;
-  }
-
-  Future<void> updateGoal(double goal) async {
-    FirebaseFirestore.instance
-        .collection('id map')
-        .doc(currentUser)
-        .get()
-        .then((DocumentSnapshot doc) async {
-      final user = FirebaseFirestore.instance
-          .collection('users')
-          .doc(doc.get(FieldPath(const ['name'])));
-      await user.update({'Goal': goal});
-    });
->>>>>>> Stashed changes
   }
 }
 
