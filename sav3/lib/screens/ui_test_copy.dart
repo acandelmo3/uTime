@@ -1,9 +1,9 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-import 'package:sav3/screens/user_profile.dart';
-import 'package:sav3/services/auth.dart';
-import '../services/firestore.dart';
+import 'package:uTime/screens/user_profile.dart';
+import 'package:uTime/services/auth.dart';
+import '../services/firestore_copy.dart';
 import '../services/screentime.dart';
 import 'friends_list.dart';
 import 'ui_friends_list.dart';
@@ -15,7 +15,7 @@ class UITest extends StatelessWidget {
   UITest({super.key});
   Screentime st = Screentime();
   double goal_test = -1.0;
-  final Firestore fs = Firestore();
+  final FirestoreCopy fs = FirestoreCopy();
 
   Future<String> showTime() async {
     double result = await st.getUsage();
@@ -61,7 +61,7 @@ class UITest extends StatelessWidget {
             IconButton(onPressed: () async {
                 FirebaseFirestore.instance
                     .collection('id map')
-                    .doc(Firestore.getCurrentUser())
+                    .doc(FirestoreCopy.getCurrentUser())
                     .get()
                     .then((DocumentSnapshot documentSnapshot) async {
                   String name = await documentSnapshot.get(FieldPath(['name']));

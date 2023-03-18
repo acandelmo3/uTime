@@ -1,4 +1,5 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:uTime/screens/user_profile.dart';
 import 'package:uTime/services/auth.dart';
@@ -7,11 +8,16 @@ import '../services/firestore.dart';
 import '../services/screentime.dart';
 import 'add_friends.dart';
 import 'friends_list.dart';
+import 'ui_friends_list.dart';
 import 'login_matrix.dart';
+import 'ui_login_matrix.dart';
+import 'ui_user_profile.dart';
 
 class UITest extends StatelessWidget {
   UITest({super.key});
   Screentime st = Screentime();
+  double goal_test = -1.0;
+  final Firestore fs = Firestore();
 
   Future<String> showTime() async {
     double result = await st.getUsage();
@@ -22,12 +28,25 @@ class UITest extends StatelessWidget {
     return time;
   }
 
+  
+
+
   @override
   Widget build(BuildContext context) {
     final Auth _auth = Auth();
-    final Firestore fs = Firestore();
+    //final Firestore fs = Firestore();
+    //double user = FirebaseAuth.instance.currentUser().goal;
+    //double user async = await fs.getGoalPercent();
+
+        // .collection('id map')
+        // .doc(Firestore.getCurrentUser())
+        // .get()
+        // .then((DocumentSnapshot documentSnapshot) async {
+        // String name = await documentSnapshot.get(FieldPath(['name']));
+
     return Scaffold(
-      backgroundColor: const Color.fromARGB(255, 190, 220, 255),
+      //backgroundColor: const Color.fromARGB(255, 190, 220, 255),
+      backgroundColor: const Color.fromARGB(255, 79, 118, 176),
       appBar: AppBar(
         backgroundColor: const Color.fromARGB(255, 75, 57, 233),
         elevation: 0.0,
@@ -65,12 +84,12 @@ class UITest extends StatelessWidget {
       body: Padding(
         padding: const EdgeInsets.all(20.0),
         child: Column(crossAxisAlignment: CrossAxisAlignment.center, children: [
-          CustomPaint(
-            painter: BluePainter(),
+          //CustomPaint(
+            //painter: BluePainter(),
             //child: Center(child: Column(mainAxisAlignment: MainAxisAlignment.center,
             //  children: [],
             //))
-          ),
+          //),
           Row(
             children: [
               ElevatedButton(
@@ -231,25 +250,5 @@ class UITest extends StatelessWidget {
         ]),
       ),
     );
-  }
-}
-
-class BluePainter extends CustomPainter {
-  @override
-  void paint(Canvas canvas, Size size) {
-    final height = size.height;
-    final width = size.width;
-    Paint paint = Paint();
-
-    Path mainBackground = Path();
-    mainBackground.addRect(Rect.fromLTRB(0, 0, width, height));
-    //paint.color = const Color.fromARGB(255, 190, 220, 255);
-    paint.color = const Color.fromARGB(255, 0, 28, 59);
-    canvas.drawPath(mainBackground, paint);
-  }
-
-  @override
-  bool shouldRepaint(CustomPainter oldDelagate) {
-    return oldDelagate != this;
   }
 }
