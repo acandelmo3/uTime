@@ -1,5 +1,6 @@
 import 'dart:io';
 import 'package:flutter/services.dart';
+import 'package:logger/logger.dart';
 import 'package:usage_stats/usage_stats.dart';
 
 import 'firestore.dart';
@@ -16,7 +17,7 @@ class Screentime {
 /*
 * Uses Main Activity to get usage permissions for Android.
 */
-  Future<void> prepUsage() async {
+  static Future<void> prepUsage() async {
     if (Platform.isAndroid) {
       await platform.invokeMethod('prepStats');
     } else if (Platform.isIOS) {
@@ -29,7 +30,8 @@ class Screentime {
 * @return Future<double> is the screen time in milliseconds
 * //TODO find implementation for IOS using ScreenTime API
 */
-  Future<double> getUsage() async {
+  static Future<double> getUsage() async {
+    Logger logger = Logger();
     UsageStats.checkUsagePermission().then((bool? permGranted) async {
       if (!permGranted!) {
         await prepUsage();
@@ -49,6 +51,7 @@ class Screentime {
     }
     Firestore fs = Firestore();
     await fs.updateTime(total);
+    logger.d(total);
     return total;
   }
 }

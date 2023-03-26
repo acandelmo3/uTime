@@ -6,7 +6,7 @@ import 'firestore.dart';
 Logger logger = Logger();
 
 /*
-* Auth class is uses methods from the firebase authentication
+* Auth class uses methods from the firebase authentication
 * service to register, sign in, and sign out users.
 */
 class Auth {

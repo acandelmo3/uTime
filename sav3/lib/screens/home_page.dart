@@ -9,10 +9,9 @@ import 'login_matrix.dart';
 
 class HomePage extends StatelessWidget {
   HomePage({super.key});
-  Screentime st = Screentime();
 
   Future<String> showTime() async {
-    double result = await st.getUsage();
+    double result = await Screentime.getUsage();
     int hrs = ((result / (1000 * 60 * 60)) % 24).toInt();
     int mins = ((result / (1000 * 60) % 60)).toInt();
     String time = 'Screentime This Week: $hrs hrs $mins mins';

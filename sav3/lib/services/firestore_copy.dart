@@ -200,8 +200,7 @@ class FirestoreCopy {
 * @return Future<double> is the percentage
 */
   Future<double> getGoalPercent() async {
-    Screentime st = Screentime();
-    await st.getUsage();
+    await Screentime.getUsage();
 
     double percent = -1;
     final curr =
@@ -220,8 +219,7 @@ class FirestoreCopy {
   }
 
   Future<double> getGoal() async {
-    Screentime st = Screentime();
-    await st.getUsage();
+    await Screentime.getUsage();
 
     double percent = -1;
     double goal = 0.0;
@@ -242,8 +240,7 @@ class FirestoreCopy {
   }
 
   Future<double> getTime() async {
-    Screentime st = Screentime();
-    await st.getUsage();
+    await Screentime.getUsage();
 
     //double percent = -1;
     double time = 0.0;

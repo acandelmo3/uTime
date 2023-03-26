@@ -200,8 +200,7 @@ class Firestore {
 * @return Future<double> is the percentage
 */
   Future<double> getGoalPercent() async {
-    Screentime st = Screentime();
-    await st.getUsage();
+    await Screentime.getUsage();
 
     double percent = -1;
     final curr =

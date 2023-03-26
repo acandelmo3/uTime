@@ -13,12 +13,11 @@ import 'ui_user_profile.dart';
 
 class UITest extends StatelessWidget {
   UITest({super.key});
-  Screentime st = Screentime();
   double goal_test = -1.0;
   final FirestoreCopy fs = FirestoreCopy();
 
   Future<String> showTime() async {
-    double result = await st.getUsage();
+    double result = await Screentime.getUsage();
     //fs.updateTime(result);
     int hrs = ((result / (1000 * 60 * 60)) % 24).toInt();
     int mins = ((result / (1000 * 60) % 60)).toInt();

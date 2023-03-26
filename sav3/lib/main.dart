@@ -15,9 +15,8 @@ Future<void> callbackDispatcher() async {
   Workmanager().executeTask((taskName, inputData) async {
     await Firebase.initializeApp();
     logger.d('Executing...');
-    Screentime st = Screentime();
     try {
-      double time = await st.getUsage();
+      double time = await Screentime.getUsage();
       logger.d('Time updated!: $time');
     } catch (error) {
       logger.d('Exception thrown!: $error');
