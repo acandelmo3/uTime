@@ -11,21 +11,23 @@ import 'login_matrix.dart';
 import 'ui_login_matrix.dart';
 import 'ui_user_profile.dart';
 
-/*
-class UITest extends StatefulWidget {
-  @override
-  State<StatefulWidget> createState() {
-    return UITestState();
-  }
-}
-*/
 
-class UITest extends StatelessWidget {
-//class UITestState extends State<UITest> {
-  //UITestState({super.key});
-  UITest({super.key});
+class UITest extends StatefulWidget {
+  UITest({super.key})
+
+  @override
+  State<UITest> createState() => _UITestState();
+}
+
+class _UITestState extends State<UITest> {
   double goal_test = -1.0;
+  double goal = await Firestore.getGoal();
   final FirestoreCopy fs = FirestoreCopy();
+
+  void changeGoal(double modifier) {
+    setState(() { goal += modifier; });
+    fs.updateGoal(await Firestore.getGoal() += modifier)
+  }
 
   Future<String> showTime() async {
     double result = await Screentime.getUsage();
@@ -274,7 +276,7 @@ class UITest extends StatelessWidget {
                           //_auth.signOut();
                           //Navigator.push(
                               //context, MaterialPageRoute(builder: (context) => const Matrix()));
-                            fs.updateGoal(await fs.getGoal() - 1800000.0);
+                            changeGoal(-1800000.0);
                         },
                         child: const Text('-30mins', 
                           style: TextStyle(fontSize: 15, color: Colors.white, fontWeight: FontWeight.bold))
@@ -290,7 +292,7 @@ class UITest extends StatelessWidget {
                           //_auth.signOut();
                           //Navigator.push(
                               //context, MaterialPageRoute(builder: (context) => const Matrix()));
-                            fs.updateGoal(await fs.getGoal() + 1800000.0);
+                            changeGoal(1800000.0);
                         },
                         child: const Text('+30mins', 
                           style: TextStyle(fontSize: 15, color: Colors.white, fontWeight: FontWeight.bold))
@@ -327,12 +329,7 @@ class UITest extends StatelessWidget {
                             ),
                           Align(
                             alignment: Alignment.center,
-                            child: 
-                            FutureBuilder(
-                              future: fs.getGoal(),
-                              builder: (BuildContext context, AsyncSnapshot<double> snapshot2) {
-                                if (snapshot2.data != null) {
-                                  return Text(
+                            child: Text(
                                     //int hrs = ((result / (1000 * 60 * 60)) % 24).toInt();
                                     //int mins = ((result / (1000 * 60) % 60)).toInt();
                                     //String time = 'Screentime This Week:\n$hrs hrs $mins mins';
@@ -340,17 +337,13 @@ class UITest extends StatelessWidget {
 
                                     //(((snapshot2.data! / (1000 * 60 * 60)) % 24).toInt()).toString()
                                     //+ ":" + (((snapshot2.data! / (1000 * 60) % 60)).toInt()).toString(), 
-                                    ((snapshot2.data! / 3600000).toInt()).toString() + "hrs " + 
-                                    ((snapshot2.data! / 60000 % 60).toInt()).toString() + "mins",
+                                    ((goal / 3600000).toInt()).toString() + "hrs " + 
+                                    ((goal / 60000 % 60).toInt()).toString() + "mins",
                                     //'insert limit', 
                                     //await fs.getGoal().toString(),
                                     style: TextStyle(fontSize: 20, color: Color.fromARGB(255, 75, 57, 233), fontWeight: FontWeight.bold), 
                                     textAlign: TextAlign.center,
-                                  );
-                                } else {
-                                  return Container();
-                                }
-                              }
+                                  );                
                               ),
                             )
                         ]

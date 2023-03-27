@@ -229,7 +229,7 @@ class Firestore {
     });
   }
 
-  Future<int> getGoal() async {
+  static Future<int> getGoal() async {
     int goal = 0;
     final curr =
         FirebaseFirestore.instance.collection('id map').doc(currentUser);

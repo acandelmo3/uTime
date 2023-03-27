@@ -13,9 +13,14 @@ import 'login_matrix.dart';
 import 'ui_login_matrix.dart';
 import 'ui_user_profile.dart';
 
-class UITest extends StatelessWidget {
-  UITest({super.key});
-  double goal_test = -1.0;
+class UITest extends StatefulWidget {
+  UITest({
+    super.key,
+    this.goal = Firestore.getGoal();
+    });
+
+  double goal;
+  State<UITest> createState() => _UITestState();
   final Firestore fs = Firestore();
 
   Future<String> showTime() async {
@@ -26,9 +31,6 @@ class UITest extends StatelessWidget {
     String time = '$days days $hrs hrs $mins mins';
     return time;
   }
-
-  
-
 
   @override
   Widget build(BuildContext context) {
