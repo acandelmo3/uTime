@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import '../services/auth.dart';
 import '../services/firestore.dart';
-//import 'home_page.dart';
 import 'ui_login_matrix.dart';
 import 'ui_test_copy.dart';
 
@@ -37,7 +36,6 @@ class _UISignInState extends State<UISignIn> {
                 ClipPath(
                   clipper: WaveClipper(),
                   child: Container(
-                    //color: const Color.fromARGB(255, 79, 118, 176),
                     color: const Color.fromARGB(255, 132, 173, 235),
                     height: 300,
                   ),
@@ -45,7 +43,6 @@ class _UISignInState extends State<UISignIn> {
                 ClipPath(
                   clipper: WaveClipper(),
                   child: Container(
-                    //color: const Color.fromARGB(255, 132, 173, 235),
                     color: const Color.fromARGB(255, 190, 220, 255),
                     height: 180,
                   ),
@@ -60,7 +57,6 @@ class _UISignInState extends State<UISignIn> {
       Padding(
         padding: const EdgeInsets.all(20.0),
         child: Container(
-          //alignment: Alignment.center,
           height: 220,
           width: 200,
           decoration: const BoxDecoration(
@@ -68,7 +64,6 @@ class _UISignInState extends State<UISignIn> {
             borderRadius: BorderRadius.all(Radius.circular(20))),
           padding: const EdgeInsets.all(20.0),
         child: Column(mainAxisAlignment: MainAxisAlignment.center, children: [
-          //padding: const EdgeInsets.all(20.0)
           TextFormField(
             controller: _controller1,
             obscureText: false,
@@ -77,6 +72,7 @@ class _UISignInState extends State<UISignIn> {
               hintText: 'Email',
             ),
           ),
+
           const Spacer(flex: 1),
           TextFormField(
             controller: _controller2,
@@ -86,6 +82,7 @@ class _UISignInState extends State<UISignIn> {
               hintText: 'Password',
             ),
           ),
+
           ElevatedButton(
             style: ElevatedButton.styleFrom(
                   backgroundColor: const Color.fromARGB(255, 75, 57, 233),
@@ -115,14 +112,13 @@ class _UISignInState extends State<UISignIn> {
   }
 }
 
+///Background Designer Function
 class WaveClipper extends CustomClipper<Path> {
   @override
   Path getClip(Size size) {
     debugPrint(size.width.toString());
     var path = Path();
     path.lineTo(0, size.height / 2);
-    //var firstStart = Offset(size.width / 5, size.height);
-    //var firstEnd = Offset(size.width / 2.25, size.height - 50.0);
     var firstStart = Offset(size.width / 5, size.height - 100.0);
     var firstEnd = Offset(size.width / 2.25, size.height - 50.0);
     path.quadraticBezierTo(firstStart.dx, firstStart.dy, firstEnd.dx, firstEnd.dy);

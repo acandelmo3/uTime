@@ -30,7 +30,6 @@ class UIAddFriends extends StatelessWidget {
                 ClipPath(
                   clipper: WaveClipper(),
                   child: Container(
-                    //color: const Color.fromARGB(255, 79, 118, 176),
                     color: const Color.fromARGB(255, 132, 173, 235),
                     height: 300,
                   ),
@@ -38,7 +37,6 @@ class UIAddFriends extends StatelessWidget {
                 ClipPath(
                   clipper: WaveClipper(),
                   child: Container(
-                    //color: const Color.fromARGB(255, 132, 173, 235),
                     color: const Color.fromARGB(255, 190, 220, 255),
                     height: 180,
                   ),
@@ -53,7 +51,6 @@ class UIAddFriends extends StatelessWidget {
       Padding(
         padding: const EdgeInsets.all(20.0),
         child: Container(
-          //alignment: Alignment.center,
           height: 150,
           width: 400,
           decoration: const BoxDecoration(
@@ -68,12 +65,8 @@ class UIAddFriends extends StatelessWidget {
                 controller: _controller,
                 obscureText: false,
                 decoration: const InputDecoration(
-                  border: OutlineInputBorder(
-                    //borderSide: BorderSide(color: Colors.white),
-                    //borderRadius: 1,
-                  ),
+                  border: OutlineInputBorder(),
                   hintText: 'First and Last Name',
-                  //hintStyle: TextStyle(color: Colors.white),
                 ),
               ),
               ElevatedButton(
@@ -113,14 +106,13 @@ class UIAddFriends extends StatelessWidget {
   }
 }
 
+///Background Designer Function
 class WaveClipper extends CustomClipper<Path> {
   @override
   Path getClip(Size size) {
     debugPrint(size.width.toString());
     var path = Path();
     path.lineTo(0, size.height / 2);
-    //var firstStart = Offset(size.width / 5, size.height);
-    //var firstEnd = Offset(size.width / 2.25, size.height - 50.0);
     var firstStart = Offset(size.width / 5, size.height - 100.0);
     var firstEnd = Offset(size.width / 2.25, size.height - 50.0);
     path.quadraticBezierTo(firstStart.dx, firstStart.dy, firstEnd.dx, firstEnd.dy);

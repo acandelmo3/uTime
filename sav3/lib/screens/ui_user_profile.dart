@@ -110,6 +110,10 @@ class UIUserProfile extends StatelessWidget {
         )
       ),
       body: 
+
+      /**
+       * Background Designer
+       */
       Stack(children: [
         Container(
             child: Stack(
@@ -117,7 +121,6 @@ class UIUserProfile extends StatelessWidget {
                 ClipPath(
                   clipper: WaveClipper(),
                   child: Container(
-                    //color: const Color.fromARGB(255, 79, 118, 176),
                     color: const Color.fromARGB(255, 132, 173, 235),
                     height: 300,
                   ),
@@ -125,7 +128,6 @@ class UIUserProfile extends StatelessWidget {
                 ClipPath(
                   clipper: WaveClipper(),
                   child: Container(
-                    //color: const Color.fromARGB(255, 132, 173, 235),
                     color: const Color.fromARGB(255, 190, 220, 255),
                     height: 180,
                   ),
@@ -134,75 +136,77 @@ class UIUserProfile extends StatelessWidget {
               ],
             ),
           ),
+
         Container( 
           alignment: Alignment.center,
           child:
-        Padding(
-          padding: const EdgeInsets.all(20.0),
-          //mainAxisAlignment: MainAxisAlignment.center,
-          child: Container(
-            //alignment: Alignment.center,
-            height: 400,
-            width: 300,
-            decoration: const BoxDecoration(
-              color: Colors.white,
-              borderRadius: BorderRadius.all(Radius.circular(20))),
+          Padding(
             padding: const EdgeInsets.all(20.0),
-          //padding: const EdgeInsets.all(20.0),
-          child: 
-      FutureBuilder<bool>(
-          future: createButton(),
-          builder: (BuildContext context, AsyncSnapshot<bool> snapshot) {
-            if (snapshot.hasData) {
-              return Padding(
-                padding: const EdgeInsets.all(20.0),
-                child: Column(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    crossAxisAlignment: CrossAxisAlignment.center,
-                    children: [
-                      Text(
-                        name,
-                        textAlign: TextAlign.center,
-                        style: const TextStyle(fontSize: 20),
-                      ),
-                      FutureBuilder<Uint8List?>(
-                          future: getPfp(),
-                          builder: (BuildContext context,
-                              AsyncSnapshot<Uint8List?> snapshot) {
-                            if (snapshot.hasData) {
-                              return Container(
-                                width: 200,
-                                height: 200,
-                                decoration: BoxDecoration(
-                                  shape: BoxShape.circle,
-                                  image: DecorationImage(image: Image.memory(snapshot.data!).image,
-                                  fit: BoxFit.fill)
-                                ),
-                              );
-                            } else {
-                              return Container();
-                            }
-                          }),
-                      if (snapshot.data!)
-                        ElevatedButton(
-                            child: Text('Add Friend'),
-                            onPressed: () => fs.sendRequest(code, name)),
-                      if (!(snapshot.data!))
-                            ElevatedButton(
-                              style: ElevatedButton.styleFrom(
-                                backgroundColor: const Color.fromARGB(255, 75, 57, 233),
-                                shape: const StadiumBorder()
-                              ),
-                                onPressed: () async => fs.updatePfp(),
-                                child: const Text('Set Picture'))
-                    ]),
-              );
-            } else {
-              return Container();
-            }
-          }),
-          )
-          )
+            child: Container(
+              height: 400,
+              width: 300,
+              decoration: const BoxDecoration(
+                color: Colors.white,
+                borderRadius: BorderRadius.all(Radius.circular(20))),
+              padding: const EdgeInsets.all(20.0),
+
+            child: 
+            FutureBuilder<bool>(
+                future: createButton(),
+                builder: (BuildContext context, AsyncSnapshot<bool> snapshot) {
+                  if (snapshot.hasData) {
+                    return Padding(
+                      padding: const EdgeInsets.all(20.0),
+                      child: Column(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          crossAxisAlignment: CrossAxisAlignment.center,
+                          children: [
+                            Text(
+                              name,
+                              textAlign: TextAlign.center,
+                              style: const TextStyle(fontSize: 20),
+                            ),
+
+                            FutureBuilder<Uint8List?>(
+                                future: getPfp(),
+                                builder: (BuildContext context,
+                                    AsyncSnapshot<Uint8List?> snapshot) {
+                                  if (snapshot.hasData) {
+                                    return Container(
+                                      width: 200,
+                                      height: 200,
+                                      decoration: BoxDecoration(
+                                        shape: BoxShape.circle,
+                                        image: DecorationImage(image: Image.memory(snapshot.data!).image,
+                                        fit: BoxFit.fill)
+                                      ),
+                                    );
+                                  } else {
+                                    return Container();
+                                  }
+                                }),
+                                
+                            if (snapshot.data!)
+                              ElevatedButton(
+                                  child: Text('Add Friend'),
+                                  onPressed: () => fs.sendRequest(code, name)),
+
+                            if (!(snapshot.data!))
+                                  ElevatedButton(
+                                    style: ElevatedButton.styleFrom(
+                                      backgroundColor: const Color.fromARGB(255, 75, 57, 233),
+                                      shape: const StadiumBorder()
+                                    ),
+                                      onPressed: () async => fs.updatePfp(),
+                                      child: const Text('Set Picture'))
+                          ]),
+                    );
+                  } else {
+                    return Container();
+                  }
+                }),
+            )
+            )
           )
       ])
     );

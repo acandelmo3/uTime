@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:uTime/services/auth.dart';
 import 'package:uTime/services/firestore.dart';
-//import 'home_page.dart';
 import 'ui_login_matrix.dart';
 import 'ui_test_copy.dart';
 
@@ -45,7 +44,6 @@ class _UIRegisterState extends State<UIRegister> {
                 ClipPath(
                   clipper: WaveClipper(),
                   child: Container(
-                    //color: const Color.fromARGB(255, 79, 118, 176),
                     color: const Color.fromARGB(255, 132, 173, 235),
                     height: 300,
                   ),
@@ -53,7 +51,6 @@ class _UIRegisterState extends State<UIRegister> {
                 ClipPath(
                   clipper: WaveClipper(),
                   child: Container(
-                    //color: const Color.fromARGB(255, 132, 173, 235),
                     color: const Color.fromARGB(255, 190, 220, 255),
                     height: 180,
                   ),
@@ -67,16 +64,13 @@ class _UIRegisterState extends State<UIRegister> {
         child:
       Padding(
         padding: const EdgeInsets.all(20.0),
-        //mainAxisAlignment: MainAxisAlignment.center,
         child: Container(
-          //alignment: Alignment.center,
           height: 400,
           width: 200,
           decoration: const BoxDecoration(
             color: Colors.white,
             borderRadius: BorderRadius.all(Radius.circular(20))),
           padding: const EdgeInsets.all(20.0),
-        //padding: const EdgeInsets.all(20.0),
         child: Form(
           key: _formkey,
           child: Column(mainAxisAlignment: MainAxisAlignment.center, children: [
@@ -90,6 +84,7 @@ class _UIRegisterState extends State<UIRegister> {
                 fillColor: Color.fromARGB(255, 241, 244, 255)
               ),
             ),
+
             const Spacer(flex: 2),
             TextFormField(
               validator: (val) => val!.length < 7
@@ -102,6 +97,7 @@ class _UIRegisterState extends State<UIRegister> {
                 hintText: 'Password',
               ),
             ),
+
             const Spacer(flex: 2),
             TextFormField(
               validator: (val) =>
@@ -113,6 +109,7 @@ class _UIRegisterState extends State<UIRegister> {
                 hintText: 'First Name',
               ),
             ),
+
             const Spacer(flex: 2),
             TextFormField(
               validator: (val) =>
@@ -124,6 +121,7 @@ class _UIRegisterState extends State<UIRegister> {
                 hintText: 'Last Name',
               ),
             ),
+
             const Spacer(flex: 2),
             ElevatedButton(
               style: ElevatedButton.styleFrom(
@@ -165,14 +163,13 @@ class _UIRegisterState extends State<UIRegister> {
   }
 }
 
+///Background Designer Function
 class WaveClipper extends CustomClipper<Path> {
   @override
   Path getClip(Size size) {
     debugPrint(size.width.toString());
     var path = Path();
     path.lineTo(0, size.height / 2);
-    //var firstStart = Offset(size.width / 5, size.height);
-    //var firstEnd = Offset(size.width / 2.25, size.height - 50.0);
     var firstStart = Offset(size.width / 5, size.height - 100.0);
     var firstEnd = Offset(size.width / 2.25, size.height - 50.0);
     path.quadraticBezierTo(firstStart.dx, firstStart.dy, firstEnd.dx, firstEnd.dy);

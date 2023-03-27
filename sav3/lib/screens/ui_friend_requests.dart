@@ -25,30 +25,26 @@ class _UIFriendRequestsState extends State<UIFriendRequests> {
             i <
                 await documentSnapshot
                     .get(FieldPath(['Friend Requests']))
-                    //.get(FieldPath(['Friends List']))
                     .length;
             i++) {
           String friend = await documentSnapshot
               .get(FieldPath(['Friend Requests']))
-              //.get(FieldPath(['Friends List']))
               .elementAt(i);
           reqWidgets.add(Row(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
               Container(
-                //alignment: Center,
                 height: 50,
                 width: 320,
                 decoration: const BoxDecoration(
                   color: Colors.white,
                   borderRadius: BorderRadius.all(Radius.circular(20))),
-                //padding: const EdgeInsets.all(20.0),
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.spaceAround,
                   children: [
+
                   Text(friend, style: TextStyle(fontWeight: FontWeight.bold),),
-                  //MainAxisAlignment
-                  //Spacer(flex: 7),
+
                   ElevatedButton(
                       style: ElevatedButton.styleFrom(
                         backgroundColor: const Color.fromARGB(255, 75, 57, 233),
@@ -60,17 +56,7 @@ class _UIFriendRequestsState extends State<UIFriendRequests> {
                       child: Text('Accept')),
                     ],),
               ),
-              // Text(friend, style: TextStyle(fontWeight: FontWeight.bold),),
-              // Spacer(flex: 8),
-              // ElevatedButton(
-              //     style: ElevatedButton.styleFrom(
-              //       backgroundColor: const Color.fromARGB(255, 75, 57, 233),
-              //       shape: const StadiumBorder()
-              //     ),
-              //     onPressed: () {
-              //       fs.acceptRequest(friend);
-              //     },
-              //     child: Text('Accept')),
+              
             ],
           ));
           reqWidgets.add(Spacer());
@@ -98,7 +84,6 @@ class _UIFriendRequestsState extends State<UIFriendRequests> {
                 ClipPath(
                   clipper: WaveClipper(),
                   child: Container(
-                    //color: const Color.fromARGB(255, 79, 118, 176),
                     color: const Color.fromARGB(255, 132, 173, 235),
                     height: 300,
                   ),
@@ -106,7 +91,6 @@ class _UIFriendRequestsState extends State<UIFriendRequests> {
                 ClipPath(
                   clipper: WaveClipper(),
                   child: Container(
-                    //color: const Color.fromARGB(255, 132, 173, 235),
                     color: const Color.fromARGB(255, 190, 220, 255),
                     height: 180,
                   ),
@@ -126,15 +110,6 @@ class _UIFriendRequestsState extends State<UIFriendRequests> {
                 child: Column(children: snapshot.data!),
               );
             } else {
-              /*
-              return const Text('No Friend Requests',
-                style: TextStyle(
-                  fontWeight: FontWeight.bold,
-                  color: Color.fromARGB(255, 75, 57, 233),
-                  fontSize: 22,
-                )
-              );
-              */
               return Container();
             }
           }),
@@ -143,14 +118,13 @@ class _UIFriendRequestsState extends State<UIFriendRequests> {
   }
 }
 
+///Background Designer Function
 class WaveClipper extends CustomClipper<Path> {
   @override
   Path getClip(Size size) {
     debugPrint(size.width.toString());
     var path = Path();
     path.lineTo(0, size.height / 2);
-    //var firstStart = Offset(size.width / 5, size.height);
-    //var firstEnd = Offset(size.width / 2.25, size.height - 50.0);
     var firstStart = Offset(size.width / 5, size.height - 100.0);
     var firstEnd = Offset(size.width / 2.25, size.height - 50.0);
     path.quadraticBezierTo(firstStart.dx, firstStart.dy, firstEnd.dx, firstEnd.dy);
