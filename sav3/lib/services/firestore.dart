@@ -59,7 +59,7 @@ class Firestore {
         friends: [],
         time: 0,
         goal: 86400000,
-        pfp: 'DefaultRef');
+        pfp: 'defaultRef.png');
 
     final docUser = FirebaseFirestore.instance
         .collection('users')

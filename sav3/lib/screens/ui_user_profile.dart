@@ -12,7 +12,7 @@ class UIUserProfile extends StatelessWidget {
   int code = 0;
   String name = '';
   String curr_name = '';
-  String pfp = '';
+  String pfp = 'defaultRef.png';
   List<dynamic> requests = <String>[];
   List<dynamic> friends = <String>[];
 
@@ -57,7 +57,7 @@ class UIUserProfile extends StatelessWidget {
 
   Future<Uint8List?> getPfp() async {
     FirebaseStorage storage = FirebaseStorage.instance;
-    final imageRef = storage.ref().child('pfps/$name');
+    final imageRef = storage.ref().child('pfps/$pfp');
     const oneMegabyte = 1024 * 1024;
     final Uint8List? data = await imageRef.getData(oneMegabyte);
     return data;

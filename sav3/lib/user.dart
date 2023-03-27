@@ -57,7 +57,7 @@ class AppUser {
       'Friends List': friends,
       'Time': time,
       'Goal': 86400000,
-      'pfp': 'DefaultRef'
+      'pfp': 'defaultRef.png'
     };
   }
 }
