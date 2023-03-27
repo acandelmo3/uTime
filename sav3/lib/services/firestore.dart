@@ -52,14 +52,14 @@ class Firestore {
 */
   Future<void> createUser({required String name}) async {
     final user = AppUser(
-      fName: fName,
-      lName: lName,
-      code: 0,
-      requests: [],
-      friends: [],
-      time: 0,
-      goal: 86400000,
-    );
+        fName: fName,
+        lName: lName,
+        code: 0,
+        requests: [],
+        friends: [],
+        time: 0,
+        goal: 86400000,
+        pfp: 'DefaultRef');
 
     final docUser = FirebaseFirestore.instance
         .collection('users')
@@ -191,6 +191,8 @@ class Firestore {
       String name = doc.get(FieldPath(const ['name']));
       final storageRef = storage.ref().child('pfps/$name');
       await storageRef.putFile(file);
+      final user = FirebaseFirestore.instance.collection('users').doc(name);
+      await user.update({'pfp': name});
     });
   }
 
@@ -238,10 +240,9 @@ class Firestore {
           .collection('users')
           .doc(doc.get(FieldPath(const ['name'])));
       await user.get().then((DocumentSnapshot doc) {
-        goal = doc.get(FieldPath(['Goal']));
+        goal = doc.get(FieldPath(const ['Goal']));
       });
     });
     return goal ~/ (1000 * 60 * 60);
   }
 }
-

@@ -11,6 +11,7 @@ class AppUser {
   final List<String>? friends;
   final double? time;
   final int? goal;
+  final String? pfp;
 
   AppUser({
     this.fName,
@@ -20,6 +21,7 @@ class AppUser {
     this.friends,
     this.time,
     this.goal,
+    this.pfp,
   });
 
   factory AppUser.fromFirestore(
@@ -28,18 +30,18 @@ class AppUser {
   ) {
     final data = snapshot.data();
     return AppUser(
-      fName: data?['First Name'],
-      lName: data?['Last Name'],
-      code: data?['Friend Code'],
-      requests: data?['Friend Requests'] is Iterable
-          ? List.from(data?['Friend Requests'])
-          : null,
-      friends: data?['Friends List'] is Iterable
-          ? List.from(data?['Friends List'])
-          : null,
-      time: data?['Time'],
-      goal: data?['Goal']
-    );
+        fName: data?['First Name'],
+        lName: data?['Last Name'],
+        code: data?['Friend Code'],
+        requests: data?['Friend Requests'] is Iterable
+            ? List.from(data?['Friend Requests'])
+            : null,
+        friends: data?['Friends List'] is Iterable
+            ? List.from(data?['Friends List'])
+            : null,
+        time: data?['Time'],
+        goal: data?['Goal'],
+        pfp: data?['pfp']);
   }
 
 /*
@@ -54,7 +56,8 @@ class AppUser {
       'Friend Requests': requests,
       'Friends List': friends,
       'Time': time,
-      'Goal': 86400000
+      'Goal': 86400000,
+      'pfp': 'DefaultRef'
     };
   }
 }
