@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:uTime/screens/register.dart';
-import 'package:uTime/screens/sign_in.dart';
+//import 'package:uTime/screens/register.dart';
+//import 'package:uTime/screens/sign_in.dart';
 import 'ui_test_copy.dart';
 import 'ui_register.dart';
 import 'ui_sign_in.dart';

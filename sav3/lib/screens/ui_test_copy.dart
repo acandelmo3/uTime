@@ -5,9 +5,9 @@ import 'package:uTime/screens/user_profile.dart';
 import 'package:uTime/services/auth.dart';
 import '../services/firestore_copy.dart';
 import '../services/screentime.dart';
-import 'friends_list.dart';
+//import 'friends_list.dart';
 import 'ui_friends_list.dart';
-import 'login_matrix.dart';
+//import 'login_matrix.dart';
 import 'ui_login_matrix.dart';
 import 'ui_user_profile.dart';
 

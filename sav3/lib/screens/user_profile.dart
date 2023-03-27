@@ -2,7 +2,7 @@ import 'dart:typed_data';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/material.dart';
-import 'package:uTime/screens/ui_test.dart';
+import 'package:uTime/screens/ui_test_copy.dart';
 import 'package:uTime/services/firestore.dart';
 
 class UserProfile extends StatelessWidget {
