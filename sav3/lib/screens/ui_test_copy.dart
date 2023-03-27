@@ -11,7 +11,18 @@ import 'login_matrix.dart';
 import 'ui_login_matrix.dart';
 import 'ui_user_profile.dart';
 
+/*
+class UITest extends StatefulWidget {
+  @override
+  State<StatefulWidget> createState() {
+    return UITestState();
+  }
+}
+*/
+
 class UITest extends StatelessWidget {
+//class UITestState extends State<UITest> {
+  //UITestState({super.key});
   UITest({super.key});
   double goal_test = -1.0;
   final FirestoreCopy fs = FirestoreCopy();
@@ -26,7 +37,15 @@ class UITest extends StatelessWidget {
     return time;
   }
 
-  
+  String sampleLimit = "0";
+
+  /*
+  void newLimit() {
+    setState(() {
+      sampleLimit = await fs.
+    });
+  }
+  */
 
 
   @override
@@ -346,6 +365,8 @@ class UITest extends StatelessWidget {
               ),
       ])
     );
+
+    //void newLimit
   }
 }
 
@@ -376,3 +397,4 @@ class WaveClipper extends CustomClipper<Path> {
     return oldDelagate != this;
   }
 }
+
