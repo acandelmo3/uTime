@@ -291,7 +291,7 @@ class UITest extends StatelessWidget {
                               builder: (BuildContext context, AsyncSnapshot<double> snapshot2) {
                                 if (snapshot2.data != null) {
                                   return Text(
-                                    snapshot2.data!.toInt().toString() + "% of Weekly Limit:",
+                                    (snapshot2.data! * 100).toInt().toString() + "% of Weekly Limit:",
                                     style: TextStyle(fontSize: 20, color: Color.fromARGB(255, 75, 57, 233), fontWeight: FontWeight.bold), 
                                     textAlign: TextAlign.center,
                                   );
