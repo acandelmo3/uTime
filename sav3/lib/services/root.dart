@@ -3,7 +3,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:provider/provider.dart';
 //import 'package:uTime/screens/home_page.dart';
 import 'package:uTime/screens/ui_login_matrix.dart';
-import 'package:uTime/screens/ui_test_copy.dart';
+import 'package:uTime/screens/ui_test.dart';
 
 /*
 * This class acts as a checkpoint to ensure the user is

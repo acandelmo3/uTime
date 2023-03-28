@@ -1,9 +1,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-import 'package:uTime/screens/user_profile.dart';
 import 'package:uTime/services/auth.dart';
-import '../services/firestore_copy.dart';
+import '../services/firestore.dart';
 import '../services/screentime.dart';
 import 'ui_friends_list.dart';
 import 'ui_login_matrix.dart';
@@ -11,9 +9,9 @@ import 'ui_user_profile.dart';
 
 
 class UITest extends StatelessWidget {
+  final Firestore fs = Firestore();
+
   UITest({super.key});
-  double goal_test = -1.0;
-  final FirestoreCopy fs = FirestoreCopy();
 
   Future<String> showTime() async {
     double result = await Screentime.getUsage();
@@ -24,7 +22,7 @@ class UITest extends StatelessWidget {
     return time;
   }
 
-  String sampleLimit = "0";
+  final sampleLimit = "0";
 
   @override
   Widget build(BuildContext context) {
@@ -51,7 +49,7 @@ class UITest extends StatelessWidget {
             IconButton(onPressed: () async {
                 FirebaseFirestore.instance
                     .collection('id map')
-                    .doc(FirestoreCopy.getCurrentUser())
+                    .doc(Firestore.getCurrentUser())
                     .get()
                     .then((DocumentSnapshot documentSnapshot) async {
                   String name = await documentSnapshot.get(FieldPath(['name']));
@@ -88,26 +86,24 @@ class UITest extends StatelessWidget {
        * Background Design
       */
       Stack(children: [
-        Container(
-            child: Stack(
-              children: [
-                ClipPath(
-                  clipper: WaveClipper(),
-                  child: Container(
-                    color: const Color.fromARGB(255, 132, 173, 235),
-                    height: 300,
-                  ),
-                ),
-                ClipPath(
-                  clipper: WaveClipper(),
-                  child: Container(
-                    color: const Color.fromARGB(255, 190, 220, 255),
-                    height: 180,
-                  ),
-                ),
-              ],
+        Stack(
+          children: [
+            ClipPath(
+              clipper: WaveClipper(),
+              child: Container(
+                color: const Color.fromARGB(255, 132, 173, 235),
+                height: 300,
+              ),
             ),
-          ),
+            ClipPath(
+              clipper: WaveClipper(),
+              child: Container(
+                color: const Color.fromARGB(255, 190, 220, 255),
+                height: 180,
+              ),
+            ),
+          ],
+        ),
 
       Padding(
         padding: const EdgeInsets.all(20.0),
@@ -251,7 +247,7 @@ class UITest extends StatelessWidget {
                           shape: const StadiumBorder()
                         ),
                         onPressed: () async { 
-                            fs.updateGoal(await fs.getGoal() - 1800000.0);
+                            fs.updateGoal(await fs.getGoal() - 1800000);
                         },
                         child: const Text('-30mins', 
                           style: TextStyle(fontSize: 15, color: Colors.white, fontWeight: FontWeight.bold))
@@ -266,7 +262,7 @@ class UITest extends StatelessWidget {
                           shape: const StadiumBorder()
                         ),
                         onPressed: () async { 
-                            fs.updateGoal(await fs.getGoal() + 1800000.0);
+                            fs.updateGoal(await fs.getGoal() + 1800000);
                         },
                         child: const Text('+30mins', 
                           style: TextStyle(fontSize: 15, color: Colors.white, fontWeight: FontWeight.bold))
@@ -309,13 +305,12 @@ class UITest extends StatelessWidget {
                             child: 
                             FutureBuilder(
                               future: fs.getGoal(),
-                              builder: (BuildContext context, AsyncSnapshot<double> snapshot2) {
+                              builder: (BuildContext context, AsyncSnapshot<int> snapshot2) {
                                 if (snapshot2.data != null) {
                                   return Text( 
-                                    ((snapshot2.data! / 3600000).toInt()).toString() + "hrs " + 
-                                    ((snapshot2.data! / 60000 % 60).toInt()).toString() + "mins",
+                                    "${snapshot2.data! ~/ 3600000}hrs ${(snapshot2.data! / 60000 % 60).toInt()}mins",
                                     
-                                    style: TextStyle(fontSize: 20, color: Color.fromARGB(255, 75, 57, 233), fontWeight: FontWeight.bold), 
+                                    style: const TextStyle(fontSize: 20, color: Color.fromARGB(255, 75, 57, 233), fontWeight: FontWeight.bold), 
                                     textAlign: TextAlign.center,
                                   );
                                 } else {

@@ -2,15 +2,11 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import '../services/firestore.dart';
 
-class UIFriendRequests extends StatefulWidget {
-  @override
-  State<UIFriendRequests> createState() => _UIFriendRequestsState();
-}
-
-class _UIFriendRequestsState extends State<UIFriendRequests> {
+class UIFriendRequests extends StatelessWidget {
+  UIFriendRequests({super.key});
   final Firestore fs = Firestore();
 
-  Future<List<Widget>> BuildList() async {
+  Future<List<Widget>> buildList() async {
     List<Widget> reqWidgets = <Widget>[];
     final curr = FirebaseFirestore.instance
         .collection('id map')
@@ -19,16 +15,16 @@ class _UIFriendRequestsState extends State<UIFriendRequests> {
     await curr.get().then((DocumentSnapshot documentSnapshot) async {
       final user = FirebaseFirestore.instance
           .collection('users')
-          .doc(await documentSnapshot.get(FieldPath(['name'])));
+          .doc(await documentSnapshot.get(FieldPath(const ['name'])));
       await user.get().then((DocumentSnapshot documentSnapshot) async {
         for (int i = 0;
             i <
                 await documentSnapshot
-                    .get(FieldPath(['Friend Requests']))
+                    .get(FieldPath(const ['Friend Requests']))
                     .length;
             i++) {
           String friend = await documentSnapshot
-              .get(FieldPath(['Friend Requests']))
+              .get(FieldPath(const ['Friend Requests']))
               .elementAt(i);
           reqWidgets.add(Row(
             mainAxisAlignment: MainAxisAlignment.center,
@@ -43,7 +39,7 @@ class _UIFriendRequestsState extends State<UIFriendRequests> {
                   mainAxisAlignment: MainAxisAlignment.spaceAround,
                   children: [
 
-                  Text(friend, style: TextStyle(fontWeight: FontWeight.bold),),
+                  Text(friend, style: const TextStyle(fontWeight: FontWeight.bold),),
 
                   ElevatedButton(
                       style: ElevatedButton.styleFrom(
@@ -53,13 +49,13 @@ class _UIFriendRequestsState extends State<UIFriendRequests> {
                       onPressed: () {
                         fs.acceptRequest(friend);
                       },
-                      child: Text('Accept')),
+                      child: const Text('Accept')),
                     ],),
               ),
               
             ],
           ));
-          reqWidgets.add(Spacer());
+          reqWidgets.add(const Spacer());
         }
       });
     });
@@ -78,30 +74,28 @@ class _UIFriendRequestsState extends State<UIFriendRequests> {
       ),
       body: 
       Stack(children: [
-        Container(
-            child: Stack(
-              children: [
-                ClipPath(
-                  clipper: WaveClipper(),
-                  child: Container(
-                    color: const Color.fromARGB(255, 132, 173, 235),
-                    height: 300,
-                  ),
-                ),
-                ClipPath(
-                  clipper: WaveClipper(),
-                  child: Container(
-                    color: const Color.fromARGB(255, 190, 220, 255),
-                    height: 180,
-                  ),
-                ),
-                
-              ],
+        Stack(
+          children: [
+            ClipPath(
+              clipper: WaveClipper(),
+              child: Container(
+                color: const Color.fromARGB(255, 132, 173, 235),
+                height: 300,
+              ),
             ),
-          ),
+            ClipPath(
+              clipper: WaveClipper(),
+              child: Container(
+                color: const Color.fromARGB(255, 190, 220, 255),
+                height: 180,
+              ),
+            ),
+            
+          ],
+        ),
       
       FutureBuilder<List<Widget>>(
-          future: BuildList(),
+          future: buildList(),
           builder:
               (BuildContext context, AsyncSnapshot<List<Widget>> snapshot) {
             if (snapshot.hasData) {

@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:uTime/services/auth.dart';
 import 'package:uTime/services/firestore.dart';
 import 'ui_login_matrix.dart';
-import 'ui_test_copy.dart';
+import 'ui_test.dart';
 
 class UIRegister extends StatefulWidget {
   const UIRegister({super.key});

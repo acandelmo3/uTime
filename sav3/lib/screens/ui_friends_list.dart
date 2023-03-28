@@ -1,10 +1,9 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
-import 'package:uTime/screens/user_profile.dart';
 import '../services/build_friends.dart';
 import '../services/firestore.dart';
 import 'ui_friend_requests.dart';
-import 'ui_test_copy.dart';
+import 'ui_test.dart';
 import 'ui_add_friends.dart';
 import 'ui_user_profile.dart';
 
@@ -19,7 +18,7 @@ class _UIFriendsListState extends State<UIFriendsList> {
 
   
   
-  Future<List<Widget>> BuildList1() async {
+  Future<List<Widget>> buildList() async {
     List<Widget> reqWidgets = <Widget>[];
     List<String> friendList = <String>[];
     List<int> widgetOrder = <int>[];
@@ -35,19 +34,19 @@ class _UIFriendsListState extends State<UIFriendsList> {
     await curr.get().then((DocumentSnapshot documentSnapshot) async {
       final user = FirebaseFirestore.instance
           .collection('users')
-          .doc(await documentSnapshot.get(FieldPath(['name'])));
+          .doc(await documentSnapshot.get(FieldPath(const ['name'])));
       await user.get().then((DocumentSnapshot documentSnapshot) async {
         for (int i = 0;
-            i < await documentSnapshot.get(FieldPath(['Friends List'])).length;
+            i < await documentSnapshot.get(FieldPath(const ['Friends List'])).length;
             i++) {
           String friend = await documentSnapshot
-              .get(FieldPath(['Friends List']))
+              .get(FieldPath(const ['Friends List']))
               .elementAt(i);
 
           final friendDoc =
               FirebaseFirestore.instance.collection('users').doc(friend);
           await friendDoc.get().then((DocumentSnapshot doc) {
-            int time = doc.get(FieldPath(['Time']));
+            int time = doc.get(FieldPath(const ['Time']));
             for (int j = 0; j < widgetOrder.length; j++) {
               if (time > widgetOrder.elementAt(j)) {
                 indexToAdd = j;
@@ -77,7 +76,7 @@ class _UIFriendsListState extends State<UIFriendsList> {
                   Navigator.push(
                       context,
                       MaterialPageRoute(
-                          builder: (context) => UserProfile(
+                          builder: (context) => UIUserProfile(
                               friendList.elementAt(i))));
                 },
                 child: const Text('Profile')),
@@ -113,7 +112,7 @@ class _UIFriendsListState extends State<UIFriendsList> {
                     .doc(Firestore.getCurrentUser())
                     .get()
                     .then((DocumentSnapshot documentSnapshot) async {
-                  String name = await documentSnapshot.get(FieldPath(['name']));
+                  String name = await documentSnapshot.get(FieldPath(const ['name']));
                   Navigator.push(
                       context,
                       MaterialPageRoute(

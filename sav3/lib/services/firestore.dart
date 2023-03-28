@@ -1,5 +1,4 @@
 import 'dart:io';
-import 'package:http/http.dart' as http;
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_storage/firebase_storage.dart';
@@ -54,6 +53,7 @@ class Firestore {
     final user = AppUser(
         fName: fName,
         lName: lName,
+        //pfp: '',
         code: 0,
         requests: [],
         friends: [],
@@ -220,18 +220,8 @@ class Firestore {
     return percent;
   }
 
-  Future<void> setGoal(int goal) async {
-    final curr =
-        FirebaseFirestore.instance.collection('id map').doc(currentUser);
-    await curr.get().then((DocumentSnapshot doc) async {
-      final user = FirebaseFirestore.instance
-          .collection('users')
-          .doc(doc.get(FieldPath(const ['name'])));
-      await user.update({'Goal': (goal * 60 * 60 * 1000)});
-    });
-  }
-
   Future<int> getGoal() async {
+    await Screentime.getUsage();
     int goal = 0;
     final curr =
         FirebaseFirestore.instance.collection('id map').doc(currentUser);
@@ -240,9 +230,38 @@ class Firestore {
           .collection('users')
           .doc(doc.get(FieldPath(const ['name'])));
       await user.get().then((DocumentSnapshot doc) {
-        goal = doc.get(FieldPath(const ['Goal']));
+        goal = doc.get(FieldPath(const ['Goal'])).toInt();
       });
     });
-    return goal ~/ (1000 * 60 * 60);
+    return goal;
+  }
+
+  Future<double> getTime() async {
+    await Screentime.getUsage();
+    double time = 0.0;
+    final curr =
+        FirebaseFirestore.instance.collection('id map').doc(currentUser);
+    await curr.get().then((DocumentSnapshot doc) async {
+      final user = FirebaseFirestore.instance
+          .collection('users')
+          .doc(doc.get(FieldPath(const ['name'])));
+      await user.get().then((DocumentSnapshot doc) {
+        time = doc.get(FieldPath(const ['Time']));
+      });
+    });
+    return time;
+  }
+
+  Future<void> updateGoal(int goal) async {
+    FirebaseFirestore.instance
+        .collection('id map')
+        .doc(currentUser)
+        .get()
+        .then((DocumentSnapshot doc) async {
+      final user = FirebaseFirestore.instance
+          .collection('users')
+          .doc(doc.get(FieldPath(const ['name'])));
+      await user.update({'Goal': goal});
+    });
   }
 }

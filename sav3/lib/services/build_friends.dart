@@ -1,7 +1,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
-import '../screens/user_profile.dart';
+import '../screens/ui_user_profile.dart';
 import 'firestore.dart';
 
 class BuildFriends {
@@ -57,12 +57,8 @@ class BuildFriends {
           int time = widgetOrder.elementAt(i) ~/ (1000 * 60 * 60);
           String name = friendList.elementAt(i++);
           reqWidgets.add(
-            Padding(padding: EdgeInsets.symmetric(vertical: 5), child: 
-            //Container(height: 50, child:
-            //Spacer(),
+            Padding(padding: const EdgeInsets.symmetric(vertical: 5), child: 
             Container(
-              //Spacer(),
-                //alignment: Center,
                 height: 30,
                 width: 330,
                 decoration: const BoxDecoration(
@@ -72,7 +68,6 @@ class BuildFriends {
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
-              //Spacer(),
               RichText(
                 text: TextSpan(
                     text: '$i. $name',
@@ -86,17 +81,14 @@ class BuildFriends {
                             context,
                             MaterialPageRoute(
                                 builder: (context) =>
-                                    UserProfile(friendList.elementAt(i - 1))));
+                                    UIUserProfile(name)));
                       }),
               ),
-              //const Spacer(),
               Text('$time hrs', style: const TextStyle(
                                 fontWeight: FontWeight.bold,
                                 color: Color.fromARGB(255, 75, 57, 233),
                                 fontSize: 15,
                                 )),
-              //Container(width: 5),
-              
             ],
           ))));
         }

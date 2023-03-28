@@ -3,8 +3,9 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/material.dart';
 import 'package:uTime/services/firestore.dart';
+import '../services/firestore.dart';
 import 'ui_friends_list.dart';
-import 'ui_test_copy.dart';
+import 'ui_test.dart';
 
 
 class UIUserProfile extends StatelessWidget {
@@ -16,23 +17,21 @@ class UIUserProfile extends StatelessWidget {
   List<dynamic> requests = <String>[];
   List<dynamic> friends = <String>[];
 
-  UIUserProfile(String name) {
-    this.name = name;
-  }
+  UIUserProfile(this.name, {super.key});
 
   Future<bool> createButton() async {
     final curr = FirebaseFirestore.instance
         .collection('id map')
         .doc(Firestore.getCurrentUser());
     await curr.get().then((DocumentSnapshot documentSnapshot) async {
-      curr_name = documentSnapshot.get(FieldPath(['name']));
+      curr_name = documentSnapshot.get(FieldPath(const ['name']));
       final user = FirebaseFirestore.instance
           .collection('users')
-          .doc(documentSnapshot.get(FieldPath(['name'])));
+          .doc(name);
       await user.get().then((DocumentSnapshot documentSnapshot) {
-        requests = documentSnapshot.get(FieldPath(['Friend Requests']));
-        friends = documentSnapshot.get(FieldPath(['Friends List']));
-        pfp = documentSnapshot.get(FieldPath(['pfp']));
+        requests = documentSnapshot.get(FieldPath(const ['Friend Requests']));
+        friends = documentSnapshot.get(FieldPath(const ['Friends List']));
+        pfp = documentSnapshot.get(FieldPath(const ['pfp']));
       });
     });
 
@@ -86,7 +85,7 @@ class UIUserProfile extends StatelessWidget {
                     .doc(Firestore.getCurrentUser())
                     .get()
                     .then((DocumentSnapshot documentSnapshot) async {
-                  String name = await documentSnapshot.get(FieldPath(['name']));
+                  String name = await documentSnapshot.get(FieldPath(const ['name']));
                   Navigator.push(
                       context,
                       MaterialPageRoute(
@@ -115,27 +114,25 @@ class UIUserProfile extends StatelessWidget {
        * Background Designer
        */
       Stack(children: [
-        Container(
-            child: Stack(
-              children: [
-                ClipPath(
-                  clipper: WaveClipper(),
-                  child: Container(
-                    color: const Color.fromARGB(255, 132, 173, 235),
-                    height: 300,
-                  ),
-                ),
-                ClipPath(
-                  clipper: WaveClipper(),
-                  child: Container(
-                    color: const Color.fromARGB(255, 190, 220, 255),
-                    height: 180,
-                  ),
-                ),
-                
-              ],
+        Stack(
+          children: [
+            ClipPath(
+              clipper: WaveClipper(),
+              child: Container(
+                color: const Color.fromARGB(255, 132, 173, 235),
+                height: 300,
+              ),
             ),
-          ),
+            ClipPath(
+              clipper: WaveClipper(),
+              child: Container(
+                color: const Color.fromARGB(255, 190, 220, 255),
+                height: 180,
+              ),
+            ),
+            
+          ],
+        ),
 
         Container( 
           alignment: Alignment.center,
