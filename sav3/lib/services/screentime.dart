@@ -12,7 +12,7 @@ import 'firestore.dart';
 */
 class Screentime {
 //Creates a MethodChannel to access Main Activity
-  static const platform = MethodChannel("com.example/sav3");
+  static const platform = MethodChannel("com.uTime");
 
 /*
 * Uses Main Activity to get usage permissions for Android.

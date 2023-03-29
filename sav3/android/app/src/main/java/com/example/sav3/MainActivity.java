@@ -11,7 +11,7 @@ import android.provider.Settings;
 
 
 public class MainActivity extends FlutterActivity {
-  private static final String CHANNEL = "com.example/sav3";
+  private static final String CHANNEL = "com.uTime";
 
   @Override
   public void configureFlutterEngine(@NonNull FlutterEngine flutterEngine) {
