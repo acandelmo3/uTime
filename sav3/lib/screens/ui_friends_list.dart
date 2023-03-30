@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 import '../services/build_friends.dart';
 import '../services/firestore.dart';
 import 'ui_friend_requests.dart';
-import 'ui_test.dart';
+import 'ui_home.dart';
 import 'ui_add_friends.dart';
 import 'ui_user_profile.dart';
 
@@ -123,7 +123,7 @@ class _UIFriendsListState extends State<UIFriendsList> {
                     color: Colors.white,
                   )), 
             IconButton(onPressed: () => Navigator.push(context,
-                MaterialPageRoute(builder: (context) => UITest())),
+                MaterialPageRoute(builder: (context) => UIHome())),
                 icon: const Icon(Icons.home, 
                   color: Colors.white,
                 )), 

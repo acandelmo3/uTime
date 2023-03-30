@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'ui_test.dart';
 import 'ui_register.dart';
 import 'ui_sign_in.dart';
 
@@ -23,27 +22,25 @@ class _UIMatrixState extends State<UIMatrix> {
       ),
       body: 
       Stack(children: [
-        Container(
-            child: Stack(
-              children: [
-                ClipPath(
-                  clipper: WaveClipper(),
-                  child: Container(
-                    color: const Color.fromARGB(255, 132, 173, 235),
-                    height: 300,
-                  ),
-                ),
-                ClipPath(
-                  clipper: WaveClipper(),
-                  child: Container(
-                    color: const Color.fromARGB(255, 190, 220, 255),
-                    height: 180,
-                  ),
-                ),
-                
-              ],
+        Stack(
+          children: [
+            ClipPath(
+              clipper: WaveClipper(),
+              child: Container(
+                color: const Color.fromARGB(255, 132, 173, 235),
+                height: 300,
+              ),
             ),
-          ),
+            ClipPath(
+              clipper: WaveClipper(),
+              child: Container(
+                color: const Color.fromARGB(255, 190, 220, 255),
+                height: 180,
+              ),
+            ),
+            
+          ],
+        ),
           Center( child:
       Padding(
         padding: const EdgeInsets.all(20.0),

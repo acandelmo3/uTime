@@ -2,7 +2,6 @@ import 'dart:io';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_storage/firebase_storage.dart';
-import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:uTime/services/screentime.dart';
 import '../user.dart';
@@ -56,7 +55,7 @@ class Firestore {
         //pfp: '',
         code: 0,
         requests: [],
-        friends: [],
+        friends: ['$fName $lName'],
         time: 0,
         goal: 86400000,
         pfp: 'defaultRef.png');
@@ -180,7 +179,8 @@ class Firestore {
   Future<void> updatePfp() async {
     final ImagePicker picker = ImagePicker();
     XFile? image = await picker.pickImage(source: ImageSource.gallery);
-    File file = File(image!.path);
+    if (image != null) {
+      File file = File(image.path);
     FirebaseStorage storage = FirebaseStorage.instance;
 
     FirebaseFirestore.instance
@@ -194,6 +194,7 @@ class Firestore {
       final user = FirebaseFirestore.instance.collection('users').doc(name);
       await user.update({'pfp': name});
     });
+    } 
   }
 
 /*

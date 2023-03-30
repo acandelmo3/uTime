@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:uTime/services/auth.dart';
 import 'package:uTime/services/firestore.dart';
 import 'ui_login_matrix.dart';
-import 'ui_test.dart';
+import 'ui_home.dart';
 
 class UIRegister extends StatefulWidget {
   const UIRegister({super.key});
@@ -142,7 +142,7 @@ class _UIRegisterState extends State<UIRegister> {
                       fs.getData(fName, lName, result);
                       Navigator.push(context,
                           //MaterialPageRoute(builder: (context) => HomePage()));
-                          MaterialPageRoute(builder: (context) => UITest()));
+                          MaterialPageRoute(builder: (context) => UIHome()));
                           //MaterialPageRoute(builder: (context) => UIMatrix()));
                     }
                   }
