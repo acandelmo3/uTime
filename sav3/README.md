@@ -1,16 +1,5 @@
-# sav3
+# uTime
 
-A new Flutter project.
+# 2023 Google Solutions Challenge Submission. The mobile app uTime is designed to encourage human interaction, increase productivity, and erase technostress.
 
-## Getting Started
-
-This project is a starting point for a Flutter application.
-
-A few resources to get you started if this is your first Flutter project:
-
-- [Lab: Write your first Flutter app](https://docs.flutter.dev/get-started/codelab)
-- [Cookbook: Useful Flutter samples](https://docs.flutter.dev/cookbook)
-
-For help getting started with Flutter development, view the
-[online documentation](https://docs.flutter.dev/), which offers tutorials,
-samples, guidance on mobile development, and a full API reference.
+# Code can be run via the main class in the lib folder on an android phone or emulator. Can also be found on the Google Play Store via the following link:
